@@ -117,8 +117,7 @@ function App() {
       {/* Topbar */}
       <header className={"topbar" + (onDark ? " on-dark" : "") + (menuOpen ? " menu-open" : "")}>
         <a href="#top" className="brand" onClick={() => setMenuOpen(false)}>
-          <span className="brand-mark">AS</span>
-          <span>Arden <span style={{ opacity: 0.5, letterSpacing: "0.18em", fontSize: 11, fontFamily: "var(--font-sans)", textTransform: "uppercase", marginLeft: 4 }}>Studio</span></span>
+          <img src="assets/Ardenlogo.png" alt="Arden Studio" style={{ height: 38, width: "auto" }} draggable={false} />
         </a>
 
         <button

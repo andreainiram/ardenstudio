@@ -515,14 +515,9 @@ function FooterSection({ t }) {
         </div>
         <div className="marque" data-comment-anchor="cc-2">
           <img
-            src="assets/arden-monogram.png"
+            src="assets/Ardenlogo.png"
             alt="Arden Studio"
-            style={{
-
-              height: "auto",
-              display: "block",
-              margin: "48px auto 32px", width: "150px"
-            }}
+            style={{ height: "auto", display: "block", margin: "48px auto 32px", width: "220px" }}
             draggable={false} />
           
         </div>
