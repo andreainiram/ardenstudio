@@ -399,6 +399,10 @@ section.paper { background: var(--paper); color: var(--ink); }
 .about-info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  /* Fill column-by-column on desktop: each topic (Pilates, Lagree, general)
+     gets its own column with duration on top and price/level below. */
+  grid-auto-flow: column;
   gap: 1px;
   background: var(--hairline);
   border: 1px solid var(--hairline);
@@ -406,7 +410,13 @@ section.paper { background: var(--paper); color: var(--ink); }
   overflow: hidden;
 }
 @media (max-width: 720px) {
-  .about-info-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: none;
+    /* Mobile: reset to row flow so the topic-grouped data array reads top-to-bottom:
+       Pilates row, Lagree row, general row. */
+    grid-auto-flow: row;
+  }
 }
 .about-info-cell {
   background: var(--bg-soft);

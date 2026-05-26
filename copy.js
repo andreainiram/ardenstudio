@@ -49,12 +49,14 @@ window.COPY = {
         },
       ],
       infoTitle: "Informazioni pratiche",
+      // Order is column-major so that on mobile (single column flow) the items
+      // group by topic: Pilates first, then Lagree, then general info.
       info: [
         { label: "Durata · Pilates", value: "50 min" },
-        { label: "Durata · Lagree", value: "45 min" },
-        { label: "Lezioni di gruppo", value: "max 5 persone" },
         { label: "Pilates · da", value: "35€" },
+        { label: "Durata · Lagree", value: "45 min" },
         { label: "Lagree · da", value: "40€" },
+        { label: "Lezioni di gruppo", value: "max 5 persone" },
         { label: "Livello", value: "Tutti i livelli" },
       ],
       policiesTitle: "Prenotazioni & politiche",
@@ -97,7 +99,7 @@ window.COPY = {
             { label: "Lezione collettiva", value: "40€" },
             { label: "Lezione privata / introduttiva", value: "70€" },
           ],
-          attrs: ["Collettiva · 45 min", "Privata · 45 min", "Bassa impatto", "Mega Pro"],
+          attrs: ["Durata · 45 min", "Privata", "Individuale", "Basso Impatto", "Mega Pro"],
         },
         {
           num: "M / 02",
@@ -108,7 +110,7 @@ window.COPY = {
             { label: "Lezione collettiva", value: "35€" },
             { label: "Lezione privata", value: "70€" },
           ],
-          attrs: ["Reformer · 50 min", "Cadillac · Chair · Barrel", "BASI® Method", "Core control"],
+          attrs: ["Durata · 50 min", "Privata", "Individuale", "Reformer", "Cadillac · Chair · Barrel", "BASI® Method", "Mat", "Core Control"],
         },
       ],
     },
@@ -209,12 +211,14 @@ window.COPY = {
         },
       ],
       infoTitle: "Practical information",
+      // Order is column-major so that on mobile (single column flow) the items
+      // group by topic: Pilates first, then Lagree, then general info.
       info: [
         { label: "Duration · Pilates", value: "50 min" },
-        { label: "Duration · Lagree", value: "45 min" },
-        { label: "Group classes", value: "max 5 people" },
         { label: "Pilates · from", value: "€35" },
+        { label: "Duration · Lagree", value: "45 min" },
         { label: "Lagree · from", value: "€40" },
+        { label: "Group classes", value: "max 5 people" },
         { label: "Level", value: "All levels" },
       ],
       policiesTitle: "Bookings & policies",
@@ -257,7 +261,7 @@ window.COPY = {
             { label: "Group class", value: "€40" },
             { label: "Private / intro class", value: "€70" },
           ],
-          attrs: ["Group · 45 min", "Private · 45 min", "Low impact", "Mega Pro"],
+          attrs: ["Duration · 45 min", "Private", "Individual", "Low impact", "Mega Pro"],
         },
         {
           num: "M / 02",
@@ -268,7 +272,7 @@ window.COPY = {
             { label: "Group class", value: "€35" },
             { label: "Private class", value: "€70" },
           ],
-          attrs: ["Reformer · 50 min", "Cadillac · Chair · Barrel", "BASI® Method", "Core control"],
+          attrs: ["Duration · 50 min", "Private", "Individual", "Reformer", "Cadillac · Chair · Barrel", "BASI® Method", "Mat", "Core Control"],
         },
       ],
     },
