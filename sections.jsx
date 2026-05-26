@@ -303,32 +303,63 @@ function MethodSection({ t }) {
 
 }
 
-// ---------- 02 — Booking (MindBody widget) ----------
-function BookingWidget() {
-  // Render the healcode widget. Script is loaded once globally; we just place the markup.
+// ---------- 02 — Booking (MindBody: Schedule + Appointments + Account) ----------
+
+// Widget configuration: each tab maps to a MindBody widget (Branded Web or HealCode).
+const BOOKING_WIDGETS = {
+  schedule: {
+    type: "brandedweb",
+    markup:
+      '<div class="mindbody-widget" data-widget-type="Schedules" data-widget-id="9650572ff92"></div>',
+  },
+  appointments: {
+    type: "brandedweb",
+    markup:
+      '<div class="mindbody-widget" data-widget-type="Appointments" data-widget-id="9655532ff92"></div>',
+  },
+  account: {
+    type: "healcode",
+    markup:
+      '<healcode-widget data-type="registrations" data-widget-partner="object" data-widget-id="96173273ff92" data-widget-version="0"></healcode-widget>',
+  },
+};
+
+// Inject the markup for a widget kind and re-trigger its loader.
+function MindbodyWidget({ kind }) {
   const ref = useRefS(null);
   useEffectS(() => {
     if (!ref.current) return;
-    ref.current.innerHTML = `
-      <healcode-widget
-        data-version="0.2"
-        data-link-class="loginRegister"
-        data-site-id="134138"
-        data-mb-site-id="5752951"
-        data-bw-identity-site="false"
-        data-type="account-link"
-        data-inner-html="Login &nbsp;|&nbsp; Register"
-      ></healcode-widget>
-    `;
-    // Re-trigger healcode on dynamic mount
-    if (window.HC && typeof window.HC.init === "function") {
-      try {window.HC.init();} catch (e) {}
+    const cfg = BOOKING_WIDGETS[kind];
+    if (!cfg) return;
+    ref.current.innerHTML = cfg.markup;
+    // HealCode widgets need an explicit init kick after dynamic mount.
+    if (cfg.type === "healcode" && window.HC && typeof window.HC.init === "function") {
+      try { window.HC.init(); } catch (e) {}
     }
-  }, []);
-  return <div ref={ref} className="widget-host"></div>;
+    // Branded Web widget.js auto-detects new .mindbody-widget nodes via MutationObserver,
+    // so dynamic injection is picked up automatically.
+  }, [kind]);
+  return <div ref={ref} className="widget-container"></div>;
 }
 
 function BookingSection({ t }) {
+  const TABS = [
+    { key: "schedule", num: "01" },
+    { key: "appointments", num: "02" },
+    { key: "account", num: "03" },
+  ];
+
+  const [active, setActive] = useStateS("schedule");
+  // Lazy-mount each tab on first visit; once mounted it stays in the DOM (hidden via CSS).
+  const [mounted, setMounted] = useStateS({ schedule: true });
+
+  const switchTab = (key) => {
+    setActive(key);
+    if (!mounted[key]) {
+      setMounted((prev) => ({ ...prev, [key]: true }));
+    }
+  };
+
   return (
     <section className="dark" id="booking" data-screen-label="booking">
       <div className="container">
@@ -336,34 +367,42 @@ function BookingSection({ t }) {
 
         <div className="booking-card">
           <span className="badge">{t.booking.badge}</span>
-          <div className="eyebrow" style={{ opacity: 0.5, marginBottom: 8, paddingRight: 140 }}>Schedule</div>
-          <h3 style={{
-            fontFamily: "var(--font-serif)",
-            fontWeight: 300,
-            fontSize: 32,
-            letterSpacing: "-0.01em",
-            lineHeight: 1.05,
-            margin: "8px 0 8px 0"
-          }}>
-            {t.booking.cardTitle}
-          </h3>
-          <p style={{ opacity: 0.72, fontSize: 15, margin: 0, maxWidth: "52ch" }}>
-            {t.booking.cardSub}
-          </p>
-          <BookingWidget />
 
-          <div style={{
-            marginTop: 32,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            borderTop: "1px solid var(--hairline)",
-            paddingTop: 16,
-            fontSize: 12,
-            opacity: 0.55,
-            fontFamily: "var(--font-mono)",
-            letterSpacing: "0.08em"
-          }}>
+          <div className="booking-tabs" role="tablist">
+            {TABS.map((tab) =>
+              <button
+                key={tab.key}
+                role="tab"
+                aria-selected={active === tab.key}
+                className={"booking-tab" + (active === tab.key ? " active" : "")}
+                onClick={() => switchTab(tab.key)}
+                type="button"
+              >
+                <span className="booking-tab-num">{tab.num}</span>
+                <span className="booking-tab-label">{t.booking.tabs[tab.key].label}</span>
+              </button>
+            )}
+          </div>
+
+          <p className="booking-tab-sub">{t.booking.tabs[active].sub}</p>
+
+          <div className="booking-widget-stack">
+            {TABS.map((tab) =>
+              mounted[tab.key] ? (
+                <div
+                  key={tab.key}
+                  className="booking-widget-slot"
+                  role="tabpanel"
+                  hidden={active !== tab.key}
+                  style={{ display: active === tab.key ? "block" : "none" }}
+                >
+                  <MindbodyWidget kind={tab.key} />
+                </div>
+              ) : null
+            )}
+          </div>
+
+          <div className="booking-footer-meta">
             <span>Site #134138</span>
             <span>SSL secured</span>
           </div>

@@ -7,6 +7,7 @@ window.COPY = {
       booking: "Prenotazioni",
       contact: "Contatti",
       waitlist: "Newsletter",
+      account: "Account",
     },
     opening: "Apertura — Giugno 2026",
     hero: {
@@ -114,11 +115,22 @@ window.COPY = {
     booking: {
       num: "Prenotazioni",
       title: ["Prenota il tuo posto", "in studio."],
-      lede: "Crea il tuo account MindBody per accedere al calendario lezioni, prenotare e gestire i tuoi abbonamenti. I clienti già registrati possono accedere direttamente.",
-      cardTitle: "Login & registrazione",
-      cardSub: "Accedi o registrati con MindBody. Dopo il login potrai vedere il calendario completo, prenotare lezioni e gestire i pagamenti.",
+      lede: "Calendario, sessioni private e gestione account: tutto in un solo posto, sincronizzato con MindBody.",
       badge: "Powered by MindBody",
-      cta: "Continua",
+      tabs: {
+        schedule: {
+          label: "Calendario",
+          sub: "Lezioni di Lagree e Pilates di gruppo — fino a cinque persone per classe.",
+        },
+        appointments: {
+          label: "Sessioni private",
+          sub: "Lezioni private 1-on-1, sessioni introduttive e trattamenti.",
+        },
+        account: {
+          label: "Account",
+          sub: "Iscriviti o accedi al tuo profilo MindBody per gestire prenotazioni e pagamenti.",
+        },
+      },
       perks: [
         "Pacchetto fondatore — 20% su tutti gli abbonamenti del primo anno",
         "Priorità di prenotazione per le lezioni di apertura",
@@ -159,6 +171,7 @@ window.COPY = {
       booking: "Booking",
       contact: "Contact",
       waitlist: "Newsletter",
+      account: "Account",
     },
     opening: "Opening — June 2026",
     hero: {
@@ -266,11 +279,22 @@ window.COPY = {
     booking: {
       num: "Booking",
       title: ["Reserve your spot", "at the studio."],
-      lede: "Create your MindBody account to access the class schedule, book sessions and manage your memberships. Existing clients can sign in directly.",
-      cardTitle: "Login & registration",
-      cardSub: "Sign in or register with MindBody. Once signed in, you'll see the full schedule, book classes and manage payments.",
+      lede: "Schedule, private sessions and account management — all in one place, synced with MindBody.",
       badge: "Powered by MindBody",
-      cta: "Continue",
+      tabs: {
+        schedule: {
+          label: "Schedule",
+          sub: "Group Lagree and Pilates classes — up to five clients per session.",
+        },
+        appointments: {
+          label: "Private sessions",
+          sub: "One-to-one private classes, intro sessions and treatments.",
+        },
+        account: {
+          label: "Account",
+          sub: "Sign up or sign in to your MindBody profile to manage bookings and payments.",
+        },
+      },
       perks: [
         "Founder pack — 20% off all first-year memberships",
         "Priority booking on opening-week classes",

@@ -34,6 +34,28 @@ const SECTION_ORDERS = {
   "booking-about-instagram-method-contact":  ["booking", "about", "instagram", "method", "contact"],
 };
 
+// Compact MindBody account-link in the header. Re-mounts on language change via parent's key prop.
+function NavLoginLink({ label }) {
+  const ref = React.useRef(null);
+  useEffectApp(() => {
+    if (!ref.current) return;
+    ref.current.innerHTML =
+      '<healcode-widget' +
+      ' data-version="0.2"' +
+      ' data-link-class="loginRegister"' +
+      ' data-site-id="134138"' +
+      ' data-mb-site-id="5752951"' +
+      ' data-bw-identity-site="false"' +
+      ' data-type="account-link"' +
+      ' data-inner-html="' + label + '"' +
+      '></healcode-widget>';
+    if (window.HC && typeof window.HC.init === "function") {
+      try { window.HC.init(); } catch (e) {}
+    }
+  }, [label]);
+  return <span ref={ref} className="nav-login"></span>;
+}
+
 function App() {
   const [lang, setLang] = useStateApp(() => {
     return localStorage.getItem("arden_lang") || "it";
@@ -137,6 +159,7 @@ function App() {
           <a href="#method" onClick={() => setMenuOpen(false)}>{t.nav.method}</a>
           <a href="#booking" onClick={() => setMenuOpen(false)}>{t.nav.booking}</a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>{t.nav.contact}</a>
+          <NavLoginLink key={"nav-account-" + lang} label={t.nav.account} />
           <div className="lang-toggle">
             <button
               onClick={() => setLang("it")}
