@@ -813,7 +813,7 @@ section.paper { background: var(--paper); color: var(--ink); }
 footer.foot {
   background: var(--bg-dark);
   color: var(--fg-on-dark);
-  padding: 21px 0 11px;
+  padding: 14px 0 7px;
 }
 footer.foot .row {
   display: flex;
@@ -833,7 +833,7 @@ footer.foot .marque {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 13px 0 8px;
+  margin: 9px 0 5px;
   padding: 0;
 }
 footer.foot .marque img {
