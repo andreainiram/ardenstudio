@@ -2,8 +2,8 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prezzi — Arden Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Prezzi & Abbonamenti — Arden Studio</title>
   <link rel="icon" href="assets/arden-monogram.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,40 +11,15 @@
   <link rel="stylesheet" href="styles.css" />
   <script src="https://widgets.mindbodyonline.com/javascripts/healcode.js" type="text/javascript"></script>
   <style>
-    /* ── Page layout ── */
+    html, body { margin: 0; padding: 0; background: var(--bg-dark); }
+
+    /* ── Page ── */
     .pricing-page {
       background: var(--bg-dark);
       color: var(--fg-on-dark);
       min-height: 100vh;
-      padding-bottom: 80px;
+      padding-top: 64px; /* topbar height */
     }
-
-    /* ── Top nav (minimal) ── */
-    .pricing-nav {
-      position: sticky;
-      top: 0;
-      z-index: 80;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      height: 64px;
-      background: rgba(31,22,16,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(193,163,128,0.12);
-    }
-    .pricing-nav a.back {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.2s;
-    }
-    .pricing-nav a.back:hover { opacity: 1; }
-    .pricing-nav img { height: 36px; width: auto; }
 
     /* ── Hero header ── */
     .pricing-hero {
@@ -70,7 +45,7 @@
       margin: 0 0 20px;
     }
     .pricing-hero h1 em { font-style: italic; color: var(--accent); }
-    .pricing-hero p {
+    .pricing-hero .hero-lede {
       font-family: var(--font-sans);
       font-size: 15px;
       font-weight: 300;
@@ -78,7 +53,7 @@
       opacity: 0.65;
       max-width: 480px;
       margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.8;
     }
 
     /* ── Category section ── */
@@ -197,9 +172,8 @@
       margin-bottom: 20px;
     }
 
-    /* ── MindBody healcode button styling ── */
-    .healcode-pricing-option-text-link,
-    .card-btn {
+    /* ── MindBody button ── */
+    .healcode-pricing-option-text-link {
       margin-top: auto;
       display: block;
       width: 100%;
@@ -219,17 +193,16 @@
       box-sizing: border-box;
     }
     .healcode-pricing-option-text-link:hover,
-    .card-btn:hover,
     .pricing-card.featured .healcode-pricing-option-text-link {
       background: var(--accent) !important;
       color: var(--bg-dark) !important;
       border-color: var(--accent);
     }
 
-    /* ── Intro note ── */
+    /* ── Footer note ── */
     .pricing-note {
       max-width: 1100px;
-      margin: 48px auto 0;
+      margin: 48px auto 80px;
       padding: 0 32px;
       font-family: var(--font-mono);
       font-size: 11px;
@@ -240,11 +213,11 @@
     }
 
     @media (max-width: 600px) {
-      .pricing-nav { padding: 0 20px; }
       .pricing-section { padding: 48px 20px 0; }
       .pricing-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .pricing-card { padding: 18px 16px 16px; }
       .pricing-card .card-price { font-size: 26px; }
+      .pricing-section-header .cat-sub { display: none; }
     }
     @media (max-width: 400px) {
       .pricing-grid { grid-template-columns: 1fr; }
@@ -252,226 +225,295 @@
   </style>
 </head>
 <body>
-<div class="pricing-page">
+  <div id="pricing-root"></div>
 
-  <!-- Nav -->
-  <nav class="pricing-nav">
-    <a class="back" href="index.html">← Torna al sito</a>
-    <img src="assets/Ardenlogo.png" alt="Arden Studio" />
-  </nav>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="copy.js"></script>
 
-  <!-- Hero -->
-  <div class="pricing-hero">
-    <div class="eyebrow">Arden Studio · Torino</div>
-    <h1>Prezzi &amp; <em>Pacchetti</em></h1>
-    <p>Scegli il pacchetto più adatto a te. Tutti i crediti sono nominali e validi 12 mesi dall'acquisto.</p>
-  </div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-  <!-- ── 01 LAGREE ── -->
-  <div class="pricing-section">
-    <div class="pricing-section-header">
-      <span class="cat-num">01</span>
-      <h2>Lagree</h2>
-      <span class="cat-sub">Lezioni di gruppo · Megaformer</span>
-    </div>
-    <div class="pricing-grid">
+    function PricingApp() {
+      const [lang, setLang] = useState(() => localStorage.getItem("arden_lang") || "it");
+      useEffect(() => { localStorage.setItem("arden_lang", lang); }, [lang]);
 
-      <div class="pricing-card">
-        <span class="card-name">Intro Offer</span>
-        <span class="card-sessions">2 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>70</div>
-        <div class="card-per">€35 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100010" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+      const [menuOpen, setMenuOpen] = useState(false);
+      useEffect(() => {
+        if (!menuOpen) return;
+        const onResize = () => { if (window.innerWidth > 880) setMenuOpen(false); };
+        const onKey = (e) => { if (e.key === "Escape") setMenuOpen(false); };
+        window.addEventListener("resize", onResize);
+        window.addEventListener("keydown", onKey);
+        document.body.style.overflow = "hidden";
+        return () => {
+          window.removeEventListener("resize", onResize);
+          window.removeEventListener("keydown", onKey);
+          document.body.style.overflow = "";
+        };
+      }, [menuOpen]);
 
-      <div class="pricing-card">
-        <span class="card-name">Drop-in</span>
-        <span class="card-sessions">1 lezione</span>
-        <div class="card-price"><span class="currency">€</span>40</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100005" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+      // Pricing page is always dark — topbar stays on-dark, fades on scroll
+      const [scrolled, setScrolled] = useState(false);
+      useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 10);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+      }, []);
 
-      <div class="pricing-card">
-        <span class="card-name">5 Lezioni</span>
-        <span class="card-sessions">5 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>180</div>
-        <div class="card-per">€36 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100006" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+      const t = window.COPY[lang];
 
-      <div class="pricing-card featured">
-        <div class="badge">Più scelto</div>
-        <span class="card-name">10 Lezioni</span>
-        <span class="card-sessions">10 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>340</div>
-        <div class="card-per">€34 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100007" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+      return (
+        <React.Fragment>
+          {/* ── Topbar (identical to homepage) ── */}
+          <header className={"topbar on-dark" + (menuOpen ? " menu-open" : "")}>
+            <a href="index.html" className="brand" onClick={() => setMenuOpen(false)}>
+              <img src="assets/Ardenlogo.png" alt="Arden Studio" style={{ height: 114, width: "auto" }} draggable={false} />
+            </a>
 
-      <div class="pricing-card">
-        <span class="card-name">20 Lezioni</span>
-        <span class="card-sessions">20 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>600</div>
-        <div class="card-per">€30 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100008" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+            <button
+              type="button"
+              className="menu-toggle"
+              aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(v => !v)}
+            >
+              <span className="menu-toggle-bar"></span>
+              <span className="menu-toggle-bar"></span>
+              <span className="menu-toggle-bar"></span>
+            </button>
 
-      <div class="pricing-card">
-        <span class="card-name">60 Lezioni</span>
-        <span class="card-sessions">50 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>1300</div>
-        <div class="card-per">€21.67 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100009" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+            <nav className={"topbar-nav" + (menuOpen ? " open" : "")}>
+              <a href="index.html#about"   onClick={() => setMenuOpen(false)}>{t.nav.about}</a>
+              <a href="index.html#method"  onClick={() => setMenuOpen(false)}>{t.nav.method}</a>
+              <a href="index.html#booking" onClick={() => setMenuOpen(false)}>{t.nav.booking}</a>
+              <a href="prezzi.html"        onClick={() => setMenuOpen(false)} style={{ opacity: 1 }}>{t.nav.pricing}</a>
+              <a href="index.html#contact" onClick={() => setMenuOpen(false)}>{t.nav.contact}</a>
+              <a href="index.html#booking" onClick={() => setMenuOpen(false)}>{t.nav.account}</a>
+              <div className="lang-toggle">
+                <button
+                  onClick={() => setLang("it")}
+                  className={lang === "it" ? "active" : ""}
+                  style={lang === "it" ? { backgroundColor: "#faf5eb", color: "#2a1f15" } : undefined}
+                >IT</button>
+                <button
+                  onClick={() => setLang("en")}
+                  className={lang === "en" ? "active" : ""}
+                  style={lang === "en" ? { backgroundColor: "#faf5eb", color: "#2a1f15" } : undefined}
+                >EN</button>
+              </div>
+            </nav>
+          </header>
 
-    </div>
-  </div>
+          {/* ── Content ── */}
+          <div className="pricing-page">
 
-  <!-- ── 02 PILATES ── -->
-  <div class="pricing-section">
-    <div class="pricing-section-header">
-      <span class="cat-num">02</span>
-      <h2>Pilates</h2>
-      <span class="cat-sub">Lezioni di gruppo · Reformer</span>
-    </div>
-    <div class="pricing-grid">
+            {/* Hero */}
+            <div className="pricing-hero">
+              <div className="eyebrow">Arden Studio · Torino</div>
+              <h1>{lang === "it" ? <span>Prezzi &amp; <em>Abbonamenti</em></span> : <span>Prices &amp; <em>Membership</em></span>}</h1>
+              <p className="hero-lede">
+                {lang === "it"
+                  ? <>{`Scegli il pacchetto più adatto a te.`}<br />{`Tutti i crediti sono nominali e validi 12 mesi dall'acquisto.`}</>
+                  : <>{`Choose the plan that suits you best.`}<br />{`All credits are personal and valid for 12 months from purchase.`}</>
+                }
+              </p>
+            </div>
 
-      <div class="pricing-card">
-        <span class="card-name">Intro First Class</span>
-        <span class="card-sessions">1 lezione</span>
-        <div class="card-price"><span class="currency">€</span>25</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100014" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+            {/* 01 LAGREE */}
+            <div className="pricing-section">
+              <div className="pricing-section-header">
+                <span className="cat-num">01</span>
+                <h2>Lagree</h2>
+                <span className="cat-sub">{lang === "it" ? "Lezioni di gruppo · Megaformer" : "Group classes · Megaformer"}</span>
+              </div>
+              <div className="pricing-grid">
+                <div className="pricing-card">
+                  <span className="card-name">Intro Offer</span>
+                  <span className="card-sessions">2 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>70</div>
+                  <div className="card-per">€35 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100010" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">Drop-in</span>
+                  <span className="card-sessions">1 {lang === "it" ? "lezione" : "class"}</span>
+                  <div className="card-price"><span className="currency">€</span>40</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100005" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "5 Lezioni" : "5 Classes"}</span>
+                  <span className="card-sessions">5 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>180</div>
+                  <div className="card-per">€36 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100006" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card featured">
+                  <div className="badge">{lang === "it" ? "Più scelto" : "Most popular"}</div>
+                  <span className="card-name">{lang === "it" ? "10 Lezioni" : "10 Classes"}</span>
+                  <span className="card-sessions">10 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>340</div>
+                  <div className="card-per">€34 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100007" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "20 Lezioni" : "20 Classes"}</span>
+                  <span className="card-sessions">20 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>600</div>
+                  <div className="card-per">€30 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100008" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "60 Lezioni" : "60 Classes"}</span>
+                  <span className="card-sessions">50 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>1300</div>
+                  <div className="card-per">€21.67 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100009" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+              </div>
+            </div>
 
-      <div class="pricing-card">
-        <span class="card-name">Intro Offer</span>
-        <span class="card-sessions">3 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>70</div>
-        <div class="card-per">€23.33 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100015" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+            {/* 02 PILATES */}
+            <div className="pricing-section">
+              <div className="pricing-section-header">
+                <span className="cat-num">02</span>
+                <h2>Pilates</h2>
+                <span className="cat-sub">{lang === "it" ? "Lezioni di gruppo · Reformer" : "Group classes · Reformer"}</span>
+              </div>
+              <div className="pricing-grid">
+                <div className="pricing-card">
+                  <span className="card-name">Intro First Class</span>
+                  <span className="card-sessions">1 {lang === "it" ? "lezione" : "class"}</span>
+                  <div className="card-price"><span className="currency">€</span>25</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100014" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">Intro Offer</span>
+                  <span className="card-sessions">3 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>70</div>
+                  <div className="card-per">€23.33 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100015" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">Drop-in</span>
+                  <span className="card-sessions">1 {lang === "it" ? "lezione" : "class"}</span>
+                  <div className="card-price"><span className="currency">€</span>35</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100011" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "5 Lezioni" : "5 Classes"}</span>
+                  <span className="card-sessions">5 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>150</div>
+                  <div className="card-per">€30 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100012" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card featured">
+                  <div className="badge">{lang === "it" ? "Più scelto" : "Most popular"}</div>
+                  <span className="card-name">{lang === "it" ? "10 Lezioni" : "10 Classes"}</span>
+                  <span className="card-sessions">10 {lang === "it" ? "lezioni" : "classes"}</span>
+                  <div className="card-price"><span className="currency">€</span>250</div>
+                  <div className="card-per">€25 / {lang === "it" ? "lezione" : "class"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100013" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+              </div>
+            </div>
 
-      <div class="pricing-card">
-        <span class="card-name">Drop-in</span>
-        <span class="card-sessions">1 lezione</span>
-        <div class="card-price"><span class="currency">€</span>35</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100011" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+            {/* 03 SESSIONI PRIVATE */}
+            <div className="pricing-section">
+              <div className="pricing-section-header">
+                <span className="cat-num">03</span>
+                <h2>{lang === "it" ? "Sessioni Private" : "Private Sessions"}</h2>
+                <span className="cat-sub">{lang === "it" ? "1-on-1 · Lagree & Pilates" : "1-on-1 · Lagree & Pilates"}</span>
+              </div>
+              <div className="pricing-grid">
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "Lagree Private" : "Lagree Private"}</span>
+                  <span className="card-sessions">1 {lang === "it" ? "sessione" : "session"}</span>
+                  <div className="card-price"><span className="currency">€</span>70</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100017" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">Pilates Private</span>
+                  <span className="card-sessions">1 {lang === "it" ? "sessione" : "session"}</span>
+                  <div className="card-price"><span className="currency">€</span>70</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100018" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card featured">
+                  <div className="badge">{lang === "it" ? "Risparmia" : "Save"}</div>
+                  <span className="card-name">{lang === "it" ? "5 Private Lagree" : "5 Lagree Private"}</span>
+                  <span className="card-sessions">5 {lang === "it" ? "sessioni" : "sessions"}</span>
+                  <div className="card-price"><span className="currency">€</span>300</div>
+                  <div className="card-per">€60 / {lang === "it" ? "sessione" : "session"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100019" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "10 Private Lagree" : "10 Lagree Private"}</span>
+                  <span className="card-sessions">10 {lang === "it" ? "sessioni" : "sessions"}</span>
+                  <div className="card-price"><span className="currency">€</span>600</div>
+                  <div className="card-per">€60 / {lang === "it" ? "sessione" : "session"}</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100020" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Acquista" : "Buy now"} />
+                </div>
+              </div>
+            </div>
 
-      <div class="pricing-card">
-        <span class="card-name">5 Lezioni</span>
-        <span class="card-sessions">5 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>150</div>
-        <div class="card-per">€30 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100012" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+            {/* 04 MASSAGGI */}
+            <div className="pricing-section">
+              <div className="pricing-section-header">
+                <span className="cat-num">04</span>
+                <h2>{lang === "it" ? "Massaggi & Benessere" : "Massage & Wellness"}</h2>
+                <span className="cat-sub">{lang === "it" ? "Appuntamenti individuali" : "Individual appointments"}</span>
+              </div>
+              <div className="pricing-grid">
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "Massaggio Linfodrenante" : "Lymphatic Drainage"}</span>
+                  <span className="card-sessions">1 {lang === "it" ? "sessione" : "session"}</span>
+                  <div className="card-price"><span className="currency">€</span>100</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100024" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Prenota" : "Book now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "Massaggio Fisioterapico" : "Physiotherapy Massage"}</span>
+                  <span className="card-sessions">1 {lang === "it" ? "sessione" : "session"}</span>
+                  <div className="card-price"><span className="currency">€</span>100</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100023" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Prenota" : "Book now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">Riflessologia</span>
+                  <span className="card-sessions">1 {lang === "it" ? "sessione" : "session"}</span>
+                  <div className="card-price"><span className="currency">€</span>70</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100025" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Prenota" : "Book now"} />
+                </div>
+                <div className="pricing-card">
+                  <span className="card-name">{lang === "it" ? "Trattamento Osteopatico" : "Osteopathic Treatment"}</span>
+                  <span className="card-sessions">1 {lang === "it" ? "sessione" : "session"}</span>
+                  <div className="card-price"><span className="currency">€</span>70</div>
+                  <div className="card-per">&nbsp;</div>
+                  <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100026" data-bw-identity-site="true" data-type="pricing-link" data-inner-html={lang === "it" ? "Prenota" : "Book now"} />
+                </div>
+              </div>
+            </div>
 
-      <div class="pricing-card featured">
-        <div class="badge">Più scelto</div>
-        <span class="card-name">10 Lezioni</span>
-        <span class="card-sessions">10 lezioni</span>
-        <div class="card-price"><span class="currency">€</span>250</div>
-        <div class="card-per">€25 / lezione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100013" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
+            <p className="pricing-note">
+              {lang === "it"
+                ? "I prezzi sono IVA inclusa · I crediti sono nominali e non trasferibili · Validità 12 mesi dall'acquisto"
+                : "Prices include VAT · Credits are personal and non-transferable · Valid 12 months from purchase"}
+            </p>
 
-    </div>
-  </div>
+          </div>
+        </React.Fragment>
+      );
+    }
 
-  <!-- ── 03 SESSIONI PRIVATE ── -->
-  <div class="pricing-section">
-    <div class="pricing-section-header">
-      <span class="cat-num">03</span>
-      <h2>Sessioni Private</h2>
-      <span class="cat-sub">1-on-1 · Lagree & Pilates</span>
-    </div>
-    <div class="pricing-grid">
-
-      <div class="pricing-card">
-        <span class="card-name">Lagree Private</span>
-        <span class="card-sessions">1 sessione</span>
-        <div class="card-price"><span class="currency">€</span>70</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100017" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
-
-      <div class="pricing-card">
-        <span class="card-name">Pilates Private</span>
-        <span class="card-sessions">1 sessione</span>
-        <div class="card-price"><span class="currency">€</span>70</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100018" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
-
-      <div class="pricing-card featured">
-        <div class="badge">Risparmia</div>
-        <span class="card-name">5 Private Lagree</span>
-        <span class="card-sessions">5 sessioni</span>
-        <div class="card-price"><span class="currency">€</span>300</div>
-        <div class="card-per">€60 / sessione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100019" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
-
-      <div class="pricing-card">
-        <span class="card-name">10 Private Lagree</span>
-        <span class="card-sessions">10 sessioni</span>
-        <div class="card-price"><span class="currency">€</span>600</div>
-        <div class="card-per">€60 / sessione</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100020" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ── 04 MASSAGGI & BENESSERE ── -->
-  <div class="pricing-section">
-    <div class="pricing-section-header">
-      <span class="cat-num">04</span>
-      <h2>Massaggi &amp; Benessere</h2>
-      <span class="cat-sub">Appuntamenti individuali</span>
-    </div>
-    <div class="pricing-grid">
-
-      <div class="pricing-card">
-        <span class="card-name">Massaggio Linfodrenante</span>
-        <span class="card-sessions">1 sessione</span>
-        <div class="card-price"><span class="currency">€</span>100</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100024" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
-      </div>
-
-      <div class="pricing-card">
-        <span class="card-name">Massaggio Fisioterapico</span>
-        <span class="card-sessions">1 sessione</span>
-        <div class="card-price"><span class="currency">€</span>100</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100023" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
-      </div>
-
-      <div class="pricing-card">
-        <span class="card-name">Riflessologia</span>
-        <span class="card-sessions">1 sessione</span>
-        <div class="card-price"><span class="currency">€</span>70</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100025" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
-      </div>
-
-      <div class="pricing-card">
-        <span class="card-name">Trattamento Osteopatico</span>
-        <span class="card-sessions">1 sessione</span>
-        <div class="card-price"><span class="currency">€</span>70</div>
-        <div class="card-per">&nbsp;</div>
-        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100026" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
-      </div>
-
-    </div>
-  </div>
-
-  <p class="pricing-note">I prezzi sono IVA inclusa · I crediti sono nominali e non trasferibili · Validità 12 mesi dall'acquisto</p>
-
-</div>
+    const root = ReactDOM.createRoot(document.getElementById("pricing-root"));
+    root.render(<PricingApp />);
+  </script>
 </body>
 </html>
