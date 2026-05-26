@@ -121,7 +121,7 @@ window.COPY = {
       badge: "Powered by MindBody",
       tabs: {
         schedule: {
-          label: "Calendario",
+          label: "Lezioni",
           sub: "Lezioni di Lagree e Pilates di gruppo — fino a cinque persone per classe.",
         },
         appointments: {
@@ -283,7 +283,7 @@ window.COPY = {
       badge: "Powered by MindBody",
       tabs: {
         schedule: {
-          label: "Schedule",
+          label: "Classes",
           sub: "Group Lagree and Pilates classes — up to five clients per session.",
         },
         appointments: {

@@ -15,8 +15,10 @@
   <!-- App styles -->
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- MindBody Branded Web widget — for Schedules & Appointments widgets -->
+  <!-- MindBody Branded Web widget — for Appointments widget -->
   <script async src="https://brandedweb.mindbodyonline.com/embed/widget.js"></script>
+  <!-- MindBody HealCode widget — for Class List widget (note: separate login session from Branded Web) -->
+  <script src="https://widgets.mindbodyonline.com/javascripts/healcode.js" type="text/javascript"></script>
 </head>
 <body>
   <!-- MindBody widget hosts: pre-rendered at body root so the Branded Web loader
@@ -26,7 +28,7 @@
        it stays in the same document. Hidden off-screen until claimed. -->
   <div id="mbo-hosts" aria-hidden="true" style="position:absolute;top:-9999px;left:-9999px;width:0;height:0;overflow:hidden;">
     <div id="mbo-host-schedule">
-      <div class="mindbody-widget" data-widget-type="Schedules" data-widget-id="9650572ff92"></div>
+      <healcode-widget data-type="class_lists" data-widget-partner="object" data-widget-id="9696949ff92" data-widget-version="0"></healcode-widget>
     </div>
     <div id="mbo-host-appointments">
       <div class="mindbody-widget" data-widget-type="Appointments" data-widget-id="9655541ff92"></div>
