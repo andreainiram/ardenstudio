@@ -701,15 +701,6 @@ section.paper { background: var(--paper); color: var(--ink); }
   width: 100% !important;
   max-width: 100%;
 }
-/* MindBody HealCode widgets need explicit block + full width too */
-.booking-card .widget-container healcode-widget {
-  display: block;
-  width: 100%;
-}
-.booking-card .widget-container healcode-widget iframe {
-  width: 100% !important;
-  max-width: 100%;
-}
 
 /* Footer meta row */
 .booking-card .booking-footer-meta {

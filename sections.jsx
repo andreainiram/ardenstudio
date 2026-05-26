@@ -303,30 +303,21 @@ function MethodSection({ t }) {
 
 }
 
-// ---------- 02 — Booking (MindBody: HealCode Class List + Branded Web Appointments) ----------
+// ---------- 02 — Booking (MindBody Branded Web: Schedule + Appointments) ----------
 
-// The widget divs themselves live in index.html at body root so the MindBody
-// loaders (Branded Web widget.js and HealCode healcode.js) catch them in their
-// initial DOM scans with no timing surprises. MindbodyWidget below moves the
-// pre-initialized host element into the active tab container.
+// The widget divs themselves live in index.html at body root so the Branded Web
+// loader (widget.js) catches them in its initial DOM scan with no timing surprises.
+// MindbodyWidget below moves the pre-initialized host element into the active tab.
 // Valid kinds: "schedule" | "appointments" — must match id="mbo-host-<kind>" in HTML.
-// Note: schedule (HealCode) and appointments (Branded Web) have separate login
-// sessions — this is a MindBody limitation, not a bug.
 function MindbodyWidget({ kind }) {
   const ref = useRefS(null);
   useEffectS(() => {
     if (!ref.current) return;
     const host = document.getElementById("mbo-host-" + kind);
     if (host && host.parentElement !== ref.current) {
-      // Move the host (with widget content already initialized by the loader)
-      // into the active tab container. Stays in the same document, so the
-      // injected iframe/markup survives.
+      // Move the host (with iframe already initialized by widget.js) into the
+      // active tab container. Stays in the same document, so the iframe survives.
       ref.current.appendChild(host);
-      // Defensive: re-trigger HealCode init in case the move happened before
-      // HealCode finished its initial scan. No-op for Branded Web.
-      if (window.HC && typeof window.HC.init === "function") {
-        try { window.HC.init(); } catch (e) {}
-      }
     }
   }, [kind]);
   return <div ref={ref} className="widget-container"></div>;
