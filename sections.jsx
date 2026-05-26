@@ -305,37 +305,22 @@ function MethodSection({ t }) {
 
 // ---------- 02 — Booking (MindBody Branded Web: Schedule + Appointments) ----------
 
-// Widget configuration: both tabs use Branded Web, so they share a single login session.
-// Branded Web handles sign-in/registration inline via popup when a user clicks "Book".
-const BOOKING_WIDGETS = {
-  schedule: {
-    widgetType: "Schedules",
-    widgetId: "9650572ff92",
-  },
-  appointments: {
-    widgetType: "Appointments",
-    widgetId: "9655532ff92",
-  },
-};
-
-// Render the Branded Web widget div directly via React. The Branded Web loader
-// (brandedweb.mindbodyonline.com/embed/widget.js) scans the DOM for .mindbody-widget
-// nodes and watches for new ones via MutationObserver — rendering through JSX
-// (vs. innerHTML in a post-mount effect) gives the loader a reliable hook.
-// React doesn't touch the empty div after the first render, so the loader's
-// injected iframe/markup persists across tab switches.
+// The widget divs themselves live in index.html at body root so the Branded Web
+// loader (widget.js) catches them in its initial DOM scan with no timing surprises.
+// MindbodyWidget below moves the pre-initialized host element into the active tab.
+// Valid kinds: "schedule" | "appointments" — must match id="mbo-host-<kind>" in HTML.
 function MindbodyWidget({ kind }) {
-  const cfg = BOOKING_WIDGETS[kind];
-  if (!cfg) return null;
-  return (
-    <div className="widget-container">
-      <div
-        className="mindbody-widget"
-        data-widget-type={cfg.widgetType}
-        data-widget-id={cfg.widgetId}
-      ></div>
-    </div>
-  );
+  const ref = useRefS(null);
+  useEffectS(() => {
+    if (!ref.current) return;
+    const host = document.getElementById("mbo-host-" + kind);
+    if (host && host.parentElement !== ref.current) {
+      // Move the host (with iframe already initialized by widget.js) into the
+      // active tab container. Stays in the same document, so the iframe survives.
+      ref.current.appendChild(host);
+    }
+  }, [kind]);
+  return <div ref={ref} className="widget-container"></div>;
 }
 
 function BookingSection({ t }) {

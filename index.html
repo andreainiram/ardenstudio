@@ -19,6 +19,20 @@
   <script async src="https://brandedweb.mindbodyonline.com/embed/widget.js"></script>
 </head>
 <body>
+  <!-- MindBody widget hosts: pre-rendered at body root so the Branded Web loader
+       (widget.js) detects them in its initial DOMContentLoaded scan with no timing
+       surprises. React's BookingSection moves these into the active tab's container
+       via appendChild — the iframe injected by widget.js survives the move because
+       it stays in the same document. Hidden off-screen until claimed. -->
+  <div id="mbo-hosts" aria-hidden="true" style="position:absolute;top:-9999px;left:-9999px;width:0;height:0;overflow:hidden;">
+    <div id="mbo-host-schedule">
+      <div class="mindbody-widget" data-widget-type="Schedules" data-widget-id="9650572ff92"></div>
+    </div>
+    <div id="mbo-host-appointments">
+      <div class="mindbody-widget" data-widget-type="Appointments" data-widget-id="9655532ff92"></div>
+    </div>
+  </div>
+
   <div id="root"></div>
 
   <!-- React pinned -->
