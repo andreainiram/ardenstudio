@@ -135,6 +135,7 @@ function App() {
           <a href="#about" onClick={() => setMenuOpen(false)}>{t.nav.about}</a>
           <a href="#method" onClick={() => setMenuOpen(false)}>{t.nav.method}</a>
           <a href="#booking" onClick={() => setMenuOpen(false)}>{t.nav.booking}</a>
+          <a href="prezzi.html" onClick={() => setMenuOpen(false)}>{t.nav.pricing}</a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>{t.nav.contact}</a>
           <a href="#booking" onClick={() => setMenuOpen(false)}>{t.nav.account}</a>
           <div className="lang-toggle">

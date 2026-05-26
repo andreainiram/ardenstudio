@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prezzi — Arden Studio</title>
+  <link rel="icon" href="assets/arden-monogram.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://widgets.mindbodyonline.com/javascripts/healcode.js" type="text/javascript"></script>
+  <style>
+    /* ── Page layout ── */
+    .pricing-page {
+      background: var(--bg-dark);
+      color: var(--fg-on-dark);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* ── Top nav (minimal) ── */
+    .pricing-nav {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(31,22,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(193,163,128,0.12);
+    }
+    .pricing-nav a.back {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .pricing-nav a.back:hover { opacity: 1; }
+    .pricing-nav img { height: 36px; width: auto; }
+
+    /* ── Hero header ── */
+    .pricing-hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+      border-bottom: 1px solid rgba(193,163,128,0.15);
+    }
+    .pricing-hero .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.7;
+      margin-bottom: 16px;
+    }
+    .pricing-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(42px, 7vw, 80px);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--fg-on-dark);
+      margin: 0 0 20px;
+    }
+    .pricing-hero h1 em { font-style: italic; color: var(--accent); }
+    .pricing-hero p {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--fg-on-dark);
+      opacity: 0.65;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Category section ── */
+    .pricing-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 32px 0;
+    }
+    .pricing-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(193,163,128,0.2);
+    }
+    .pricing-section-header .cat-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+    .pricing-section-header h2 {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--fg-on-dark);
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+    .pricing-section-header .cat-sub {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: 0.6;
+      margin-left: auto;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Cards grid ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    /* ── Single card ── */
+    .pricing-card {
+      background: rgba(193,163,128,0.06);
+      border: 1px solid rgba(193,163,128,0.14);
+      border-radius: 2px;
+      padding: 24px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .pricing-card:hover {
+      border-color: rgba(193,163,128,0.35);
+      background: rgba(193,163,128,0.10);
+    }
+    .pricing-card.featured {
+      border-color: rgba(193,163,128,0.4);
+      background: rgba(193,163,128,0.11);
+    }
+    .pricing-card .badge {
+      position: absolute;
+      top: -1px; right: 16px;
+      background: var(--accent);
+      color: var(--bg-dark);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+    }
+    .pricing-card .card-name {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--fg-on-dark);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .pricing-card .card-sessions {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      opacity: 0.65;
+      margin-bottom: 16px;
+    }
+    .pricing-card .card-price {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--fg-on-dark);
+      line-height: 1;
+    }
+    .pricing-card .card-price .currency {
+      font-size: 16px;
+      vertical-align: super;
+      margin-right: 2px;
+      opacity: 0.7;
+    }
+    .pricing-card .card-per {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+
+    /* ── MindBody healcode button styling ── */
+    .healcode-pricing-option-text-link,
+    .card-btn {
+      margin-top: auto;
+      display: block;
+      width: 100%;
+      padding: 10px 0;
+      background: transparent;
+      border: 1px solid rgba(193,163,128,0.35);
+      color: var(--accent) !important;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none !important;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .healcode-pricing-option-text-link:hover,
+    .card-btn:hover,
+    .pricing-card.featured .healcode-pricing-option-text-link {
+      background: var(--accent) !important;
+      color: var(--bg-dark) !important;
+      border-color: var(--accent);
+    }
+
+    /* ── Intro note ── */
+    .pricing-note {
+      max-width: 1100px;
+      margin: 48px auto 0;
+      padding: 0 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      opacity: 0.45;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .pricing-nav { padding: 0 20px; }
+      .pricing-section { padding: 48px 20px 0; }
+      .pricing-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .pricing-card { padding: 18px 16px 16px; }
+      .pricing-card .card-price { font-size: 26px; }
+    }
+    @media (max-width: 400px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="pricing-page">
+
+  <!-- Nav -->
+  <nav class="pricing-nav">
+    <a class="back" href="index.html">← Torna al sito</a>
+    <img src="assets/Ardenlogo.png" alt="Arden Studio" />
+  </nav>
+
+  <!-- Hero -->
+  <div class="pricing-hero">
+    <div class="eyebrow">Arden Studio · Torino</div>
+    <h1>Prezzi &amp; <em>Pacchetti</em></h1>
+    <p>Scegli il pacchetto più adatto a te. Tutti i crediti sono nominali e validi 12 mesi dall'acquisto.</p>
+  </div>
+
+  <!-- ── 01 LAGREE ── -->
+  <div class="pricing-section">
+    <div class="pricing-section-header">
+      <span class="cat-num">01</span>
+      <h2>Lagree</h2>
+      <span class="cat-sub">Lezioni di gruppo · Megaformer</span>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <span class="card-name">Intro Offer</span>
+        <span class="card-sessions">2 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>70</div>
+        <div class="card-per">€35 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100010" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">Drop-in</span>
+        <span class="card-sessions">1 lezione</span>
+        <div class="card-price"><span class="currency">€</span>40</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100005" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">5 Lezioni</span>
+        <span class="card-sessions">5 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>180</div>
+        <div class="card-per">€36 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100006" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="badge">Più scelto</div>
+        <span class="card-name">10 Lezioni</span>
+        <span class="card-sessions">10 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>340</div>
+        <div class="card-per">€34 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100007" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">20 Lezioni</span>
+        <span class="card-sessions">20 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>600</div>
+        <div class="card-per">€30 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100008" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">60 Lezioni</span>
+        <span class="card-sessions">50 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>1300</div>
+        <div class="card-per">€21.67 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100009" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 02 PILATES ── -->
+  <div class="pricing-section">
+    <div class="pricing-section-header">
+      <span class="cat-num">02</span>
+      <h2>Pilates</h2>
+      <span class="cat-sub">Lezioni di gruppo · Reformer</span>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <span class="card-name">Intro First Class</span>
+        <span class="card-sessions">1 lezione</span>
+        <div class="card-price"><span class="currency">€</span>25</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100014" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">Intro Offer</span>
+        <span class="card-sessions">3 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>70</div>
+        <div class="card-per">€23.33 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100015" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">Drop-in</span>
+        <span class="card-sessions">1 lezione</span>
+        <div class="card-price"><span class="currency">€</span>35</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100011" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">5 Lezioni</span>
+        <span class="card-sessions">5 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>150</div>
+        <div class="card-per">€30 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100012" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="badge">Più scelto</div>
+        <span class="card-name">10 Lezioni</span>
+        <span class="card-sessions">10 lezioni</span>
+        <div class="card-price"><span class="currency">€</span>250</div>
+        <div class="card-per">€25 / lezione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100013" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 03 SESSIONI PRIVATE ── -->
+  <div class="pricing-section">
+    <div class="pricing-section-header">
+      <span class="cat-num">03</span>
+      <h2>Sessioni Private</h2>
+      <span class="cat-sub">1-on-1 · Lagree & Pilates</span>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <span class="card-name">Lagree Private</span>
+        <span class="card-sessions">1 sessione</span>
+        <div class="card-price"><span class="currency">€</span>70</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100017" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">Pilates Private</span>
+        <span class="card-sessions">1 sessione</span>
+        <div class="card-price"><span class="currency">€</span>70</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100018" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="badge">Risparmia</div>
+        <span class="card-name">5 Private Lagree</span>
+        <span class="card-sessions">5 sessioni</span>
+        <div class="card-price"><span class="currency">€</span>300</div>
+        <div class="card-per">€60 / sessione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100019" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">10 Private Lagree</span>
+        <span class="card-sessions">10 sessioni</span>
+        <div class="card-price"><span class="currency">€</span>600</div>
+        <div class="card-per">€60 / sessione</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100020" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Acquista" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 04 MASSAGGI & BENESSERE ── -->
+  <div class="pricing-section">
+    <div class="pricing-section-header">
+      <span class="cat-num">04</span>
+      <h2>Massaggi &amp; Benessere</h2>
+      <span class="cat-sub">Appuntamenti individuali</span>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <span class="card-name">Massaggio Linfodrenante</span>
+        <span class="card-sessions">1 sessione</span>
+        <div class="card-price"><span class="currency">€</span>100</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100024" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">Massaggio Fisioterapico</span>
+        <span class="card-sessions">1 sessione</span>
+        <div class="card-price"><span class="currency">€</span>100</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100023" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">Riflessologia</span>
+        <span class="card-sessions">1 sessione</span>
+        <div class="card-price"><span class="currency">€</span>70</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100025" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
+      </div>
+
+      <div class="pricing-card">
+        <span class="card-name">Trattamento Osteopatico</span>
+        <span class="card-sessions">1 sessione</span>
+        <div class="card-price"><span class="currency">€</span>70</div>
+        <div class="card-per">&nbsp;</div>
+        <healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="100026" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="Prenota" />
+      </div>
+
+    </div>
+  </div>
+
+  <p class="pricing-note">I prezzi sono IVA inclusa · I crediti sono nominali e non trasferibili · Validità 12 mesi dall'acquisto</p>
+
+</div>
+</body>
+</html>
