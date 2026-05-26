@@ -129,11 +129,6 @@ window.COPY = {
           sub: "Lezioni private 1-on-1, sessioni introduttive e trattamenti.",
         },
       },
-      perks: [
-        "Pacchetto fondatore — 20% su tutti gli abbonamenti del primo anno",
-        "Priorità di prenotazione per le lezioni di apertura",
-        "Una lezione di prova gratuita per i nuovi clienti",
-      ],
     },
     waitlist: {
       num: "Newsletter",

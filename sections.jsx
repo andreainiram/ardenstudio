@@ -387,15 +387,6 @@ function BookingSection({ t }) {
             <span>SSL secured</span>
           </div>
         </div>
-
-        <ul className="booking-perks">
-          {t.booking.perks.map((p, i) =>
-            <li key={i}>
-              <span className="booking-perks-num">{String(i + 1).padStart(2, "0")}</span>
-              <span className="booking-perks-text">{p}</span>
-            </li>
-          )}
-        </ul>
       </div>
     </section>);
 
