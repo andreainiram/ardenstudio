@@ -309,28 +309,33 @@ function MethodSection({ t }) {
 // Branded Web handles sign-in/registration inline via popup when a user clicks "Book".
 const BOOKING_WIDGETS = {
   schedule: {
-    type: "brandedweb",
-    markup:
-      '<div class="mindbody-widget" data-widget-type="Schedules" data-widget-id="9650572ff92"></div>',
+    widgetType: "Schedules",
+    widgetId: "9650572ff92",
   },
   appointments: {
-    type: "brandedweb",
-    markup:
-      '<div class="mindbody-widget" data-widget-type="Appointments" data-widget-id="9655532ff92"></div>',
+    widgetType: "Appointments",
+    widgetId: "9655532ff92",
   },
 };
 
-// Inject the markup for a widget kind. Branded Web widget.js auto-detects new
-// .mindbody-widget nodes via MutationObserver, so dynamic injection works automatically.
+// Render the Branded Web widget div directly via React. The Branded Web loader
+// (brandedweb.mindbodyonline.com/embed/widget.js) scans the DOM for .mindbody-widget
+// nodes and watches for new ones via MutationObserver — rendering through JSX
+// (vs. innerHTML in a post-mount effect) gives the loader a reliable hook.
+// React doesn't touch the empty div after the first render, so the loader's
+// injected iframe/markup persists across tab switches.
 function MindbodyWidget({ kind }) {
-  const ref = useRefS(null);
-  useEffectS(() => {
-    if (!ref.current) return;
-    const cfg = BOOKING_WIDGETS[kind];
-    if (!cfg) return;
-    ref.current.innerHTML = cfg.markup;
-  }, [kind]);
-  return <div ref={ref} className="widget-container"></div>;
+  const cfg = BOOKING_WIDGETS[kind];
+  if (!cfg) return null;
+  return (
+    <div className="widget-container">
+      <div
+        className="mindbody-widget"
+        data-widget-type={cfg.widgetType}
+        data-widget-id={cfg.widgetId}
+      ></div>
+    </div>
+  );
 }
 
 function BookingSection({ t }) {
