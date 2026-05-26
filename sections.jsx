@@ -303,9 +303,10 @@ function MethodSection({ t }) {
 
 }
 
-// ---------- 02 — Booking (MindBody: Schedule + Appointments + Account) ----------
+// ---------- 02 — Booking (MindBody Branded Web: Schedule + Appointments) ----------
 
-// Widget configuration: each tab maps to a MindBody widget (Branded Web or HealCode).
+// Widget configuration: both tabs use Branded Web, so they share a single login session.
+// Branded Web handles sign-in/registration inline via popup when a user clicks "Book".
 const BOOKING_WIDGETS = {
   schedule: {
     type: "brandedweb",
@@ -317,14 +318,10 @@ const BOOKING_WIDGETS = {
     markup:
       '<div class="mindbody-widget" data-widget-type="Appointments" data-widget-id="9655532ff92"></div>',
   },
-  account: {
-    type: "healcode",
-    markup:
-      '<healcode-widget data-type="registrations" data-widget-partner="object" data-widget-id="96173273ff92" data-widget-version="0"></healcode-widget>',
-  },
 };
 
-// Inject the markup for a widget kind and re-trigger its loader.
+// Inject the markup for a widget kind. Branded Web widget.js auto-detects new
+// .mindbody-widget nodes via MutationObserver, so dynamic injection works automatically.
 function MindbodyWidget({ kind }) {
   const ref = useRefS(null);
   useEffectS(() => {
@@ -332,12 +329,6 @@ function MindbodyWidget({ kind }) {
     const cfg = BOOKING_WIDGETS[kind];
     if (!cfg) return;
     ref.current.innerHTML = cfg.markup;
-    // HealCode widgets need an explicit init kick after dynamic mount.
-    if (cfg.type === "healcode" && window.HC && typeof window.HC.init === "function") {
-      try { window.HC.init(); } catch (e) {}
-    }
-    // Branded Web widget.js auto-detects new .mindbody-widget nodes via MutationObserver,
-    // so dynamic injection is picked up automatically.
   }, [kind]);
   return <div ref={ref} className="widget-container"></div>;
 }
@@ -346,7 +337,6 @@ function BookingSection({ t }) {
   const TABS = [
     { key: "schedule", num: "01" },
     { key: "appointments", num: "02" },
-    { key: "account", num: "03" },
   ];
 
   const [active, setActive] = useStateS("schedule");

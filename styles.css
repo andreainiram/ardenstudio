@@ -565,39 +565,6 @@ section.paper { background: var(--paper); color: var(--ink); }
   position: relative;
   width: 100%;
 }
-.booking-card .widget-host {
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid var(--hairline);
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-}
-.booking-card .widget-host healcode-widget {
-  display: inline-block;
-}
-.booking-card .widget-host a,
-.booking-card .widget-host .healcode-login-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
-  border-radius: 999px;
-  background: var(--ink) !important;
-  color: var(--paper) !important;
-  font-family: var(--font-sans) !important;
-  font-size: 12px !important;
-  letter-spacing: 0.18em !important;
-  text-transform: uppercase !important;
-  font-weight: 500 !important;
-  text-decoration: none !important;
-  transition: background 0.2s;
-}
-.booking-card .widget-host a:hover,
-.booking-card .widget-host .healcode-login-link:hover {
-  background: var(--bronze) !important;
-}
-
 /* Founding-member perks list, full-width row under booking widget */
 .booking-perks {
   list-style: none;
@@ -737,49 +704,6 @@ section.paper { background: var(--paper); color: var(--ink); }
   opacity: 0.55;
   font-family: var(--font-mono);
   letter-spacing: 0.08em;
-}
-
-/* ---------- Compact MindBody login link in the topbar nav ---------- */
-.nav-login {
-  display: inline-flex;
-  align-items: center;
-}
-.nav-login healcode-widget { display: inline-block; }
-.nav-login a,
-.nav-login .healcode-login-link {
-  color: inherit !important;
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  font-family: inherit !important;
-  font-size: 13px !important;
-  letter-spacing: 0.04em !important;
-  text-transform: none !important;
-  font-weight: 400 !important;
-  text-decoration: none !important;
-  opacity: 0.78;
-  transition: opacity 0.2s;
-}
-.nav-login a:hover,
-.nav-login .healcode-login-link:hover { opacity: 1; }
-@media (max-width: 880px) {
-  /* In the mobile drawer, scale up to match the other nav links */
-  .nav-login {
-    width: 100%;
-    padding: 18px 0;
-    border-bottom: 1px solid rgba(42, 31, 21, 0.14);
-  }
-  .topbar.on-dark .nav-login {
-    border-color: rgba(245, 237, 224, 0.14);
-  }
-  .nav-login a,
-  .nav-login .healcode-login-link {
-    font-family: var(--font-serif) !important;
-    font-size: 32px !important;
-    letter-spacing: -0.01em !important;
-    opacity: 1;
-  }
 }
 
 /* ---------- Newsletter ---------- */
@@ -1314,9 +1238,6 @@ footer.foot .marque img {
 
 /* Stretch helper */
 .stretch { letter-spacing: -0.02em; }
-
-/* MindBody widget tweaks — keep it minimal */
-healcode-widget { display: inline-block; }
 
 /* Misc */
 .divider {

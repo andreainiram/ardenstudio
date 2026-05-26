@@ -126,10 +126,6 @@ window.COPY = {
           label: "Sessioni private",
           sub: "Lezioni private 1-on-1, sessioni introduttive e trattamenti.",
         },
-        account: {
-          label: "Account",
-          sub: "Iscriviti o accedi al tuo profilo MindBody per gestire prenotazioni e pagamenti.",
-        },
       },
       perks: [
         "Pacchetto fondatore — 20% su tutti gli abbonamenti del primo anno",
@@ -289,10 +285,6 @@ window.COPY = {
         appointments: {
           label: "Private sessions",
           sub: "One-to-one private classes, intro sessions and treatments.",
-        },
-        account: {
-          label: "Account",
-          sub: "Sign up or sign in to your MindBody profile to manage bookings and payments.",
         },
       },
       perks: [
