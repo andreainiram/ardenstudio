@@ -147,7 +147,7 @@ window.COPY = {
       studio: "Via Marsala 2\n10133 Torino, Italia",
       email: "hello@ardenstudio.it",
       instagram: "@ardenstudio_lagreepilates",
-      hours: "Lun–Ven · 07:00 – 21:00\nSab · 08:00 – 14:00\nDom · 09:00 – 13:00",
+      hours: "Lun–Ven · 08:00 – 19:00\nSab · 10:00 – 13:00",
     },
     foot: {
       marque: "Arden",
@@ -309,7 +309,7 @@ window.COPY = {
       studio: "Via Marsala 2\n10133 Turin, Italy",
       email: "hello@ardenstudio.it",
       instagram: "@ardenstudio_lagreepilates",
-      hours: "Mon–Fri · 7:00 am – 9:00 pm\nSat · 8:00 am – 2:00 pm\nSun · 9:00 am – 1:00 pm",
+      hours: "Mon–Fri · 8:00 am – 7:00 pm\nSat · 10:00 am – 1:00 pm",
     },
     foot: {
       marque: "Arden",
