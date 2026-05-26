@@ -117,7 +117,7 @@ function App() {
       {/* Topbar */}
       <header className={"topbar" + (onDark ? " on-dark" : "") + (menuOpen ? " menu-open" : "")}>
         <a href="#top" className="brand" onClick={() => setMenuOpen(false)}>
-          <img src="assets/Ardenlogo.png" alt="Arden Studio" style={{ height: 38, width: "auto" }} draggable={false} />
+          <img src="assets/Ardenlogo.png" alt="Arden Studio" style={{ height: 114, width: "auto" }} draggable={false} />
         </a>
 
         <button
