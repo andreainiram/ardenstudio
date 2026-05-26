@@ -517,7 +517,7 @@ function FooterSection({ t }) {
           <img
             src="assets/Ardenlogo.png"
             alt="Arden Studio"
-            style={{ height: "auto", display: "block", margin: "24px auto 16px", width: "220px" }}
+            style={{ height: "auto", display: "block", margin: "16px auto 11px", width: "220px" }}
             draggable={false} />
           
         </div>
