@@ -140,28 +140,31 @@ button { font: inherit; cursor: pointer; }
   display: none;
   background: transparent;
   border: 0;
-  padding: 8px;
+  padding: 10px;
   cursor: pointer;
-  z-index: 2;
+  z-index: 90;
   flex-direction: column;
-  gap: 5px;
-  width: 36px;
-  height: 36px;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
   justify-content: center;
   align-items: center;
   color: inherit;
+  /* Remove 300ms tap delay and ensure crisp tap response on iOS */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .menu-toggle-bar {
   display: block;
-  width: 22px;
-  height: 1.5px;
+  width: 24px;
+  height: 2px;
   background: currentColor;
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.2s ease;
 }
-.topbar.menu-open .menu-toggle-bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.topbar.menu-open .menu-toggle-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .topbar.menu-open .menu-toggle-bar:nth-child(2) { opacity: 0; }
-.topbar.menu-open .menu-toggle-bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.topbar.menu-open .menu-toggle-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 @media (max-width: 880px) {
   .menu-toggle { display: flex; }
@@ -169,15 +172,18 @@ button { font: inherit; cursor: pointer; }
   .topbar .topbar-nav {
     position: fixed;
     inset: 64px 0 0 0;
+    /* Use dynamic viewport height so iOS Safari's collapsing chrome doesn't
+       cut the bottom of the drawer off, and respect the home-indicator. */
+    max-height: calc(100dvh - 64px);
     background: var(--paper);
     color: var(--ink);
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 0;
-    padding: 32px 24px 40px;
+    padding: 28px 24px calc(40px + env(safe-area-inset-bottom));
     font-family: var(--font-serif);
-    font-size: 32px;
+    font-size: 30px;
     letter-spacing: -0.01em;
     line-height: 1.2;
     transform: translateY(-12px);
@@ -185,6 +191,9 @@ button { font: inherit; cursor: pointer; }
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Sit below the topbar's z-80 so the hamburger button stays on top. */
+    z-index: 70;
   }
   .topbar.on-dark .topbar-nav {
     background: var(--bg-dark);
@@ -201,13 +210,24 @@ button { font: inherit; cursor: pointer; }
     padding: 18px 0;
     border-bottom: 1px solid rgba(42, 31, 21, 0.14);
     opacity: 1;
+    /* Snappy tap response */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .topbar.on-dark .topbar-nav a {
     border-color: rgba(245, 237, 224, 0.14);
   }
+  /* Language toggle inside the drawer: keep the pill style but bump size a hair
+     so it reads alongside the larger serif menu links. */
   .topbar .topbar-nav .lang-toggle {
-    margin-top: 28px;
+    margin-top: 32px;
     font-family: var(--font-sans);
+    font-size: 12px;
+    align-self: flex-start;
+  }
+  .topbar .topbar-nav .lang-toggle button {
+    padding: 7px 14px;
+    font-size: 12px;
   }
 }
 
