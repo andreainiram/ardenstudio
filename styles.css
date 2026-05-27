@@ -95,14 +95,12 @@ button { font: inherit; cursor: pointer; }
   background: linear-gradient(to bottom, rgba(31,22,16,0.85), rgba(31,22,16,0));
   color: var(--paper);
 }
-/* When mobile menu is open the topbar sits on a solid surface so it never
-   reads against the page beneath. */
-.topbar.menu-open {
-  background: var(--paper);
-  color: var(--ink);
-}
+/* When mobile menu is open the topbar fades to transparent so the full-viewport
+   drawer overlay shows through behind it. The burger button stays clickable on
+   top because the topbar has a higher z-index than the drawer. */
+.topbar.menu-open,
 .topbar.menu-open.on-dark {
-  background: var(--bg-dark);
+  background: transparent;
   color: var(--paper);
 }
 
@@ -169,65 +167,77 @@ button { font: inherit; cursor: pointer; }
 @media (max-width: 880px) {
   .menu-toggle { display: flex; }
 
+  /* Full-viewport overlay menu with backdrop blur — premium iOS-style.
+     Sits below the topbar's z-80 so the hamburger / X stays clickable on top. */
   .topbar .topbar-nav {
     position: fixed;
-    inset: 64px 0 0 0;
-    /* Use dynamic viewport height so iOS Safari's collapsing chrome doesn't
-       cut the bottom of the drawer off, and respect the home-indicator. */
-    max-height: calc(100dvh - 64px);
-    background: var(--paper);
-    color: var(--ink);
+    inset: 0;
+    background: rgba(31, 22, 16, 0.88);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    backdrop-filter: blur(24px) saturate(140%);
+    color: var(--paper);
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0;
-    padding: 28px 24px calc(40px + env(safe-area-inset-bottom));
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: calc(96px + env(safe-area-inset-top)) 32px calc(48px + env(safe-area-inset-bottom));
     font-family: var(--font-serif);
-    font-size: 30px;
+    font-weight: 300;
+    font-size: 34px;
     letter-spacing: -0.01em;
-    line-height: 1.2;
-    transform: translateY(-12px);
+    line-height: 1.35;
+    text-align: center;
+    transform: scale(0.985);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    /* Sit below the topbar's z-80 so the hamburger button stays on top. */
     z-index: 70;
   }
+  /* On dark sections, keep the exact same overlay — it's always dark-on-dark. */
   .topbar.on-dark .topbar-nav {
-    background: var(--bg-dark);
+    background: rgba(31, 22, 16, 0.88);
     color: var(--paper);
   }
   .topbar .topbar-nav.open {
-    transform: translateY(0);
+    transform: scale(1);
     opacity: 1;
     pointer-events: auto;
   }
   .topbar .topbar-nav a {
-    display: block;
-    width: 100%;
-    padding: 18px 0;
-    border-bottom: 1px solid rgba(42, 31, 21, 0.14);
-    opacity: 1;
-    /* Snappy tap response */
+    display: inline-block;
+    padding: 12px 8px;
+    border: 0;
+    color: var(--paper);
+    opacity: 0.92;
+    transition: opacity 0.2s;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
+  .topbar .topbar-nav a:hover,
+  .topbar .topbar-nav a:active,
+  .topbar .topbar-nav a:focus { opacity: 1; }
   .topbar.on-dark .topbar-nav a {
-    border-color: rgba(245, 237, 224, 0.14);
+    color: var(--paper);
+    border: 0;
   }
-  /* Language toggle inside the drawer: keep the pill style but bump size a hair
-     so it reads alongside the larger serif menu links. */
+  /* Language toggle inside the overlay: light pill on dark background. */
   .topbar .topbar-nav .lang-toggle {
-    margin-top: 32px;
+    margin-top: 28px;
     font-family: var(--font-sans);
     font-size: 12px;
-    align-self: flex-start;
+    border-color: rgba(245, 237, 224, 0.4);
+    color: var(--paper);
   }
   .topbar .topbar-nav .lang-toggle button {
-    padding: 7px 14px;
+    padding: 8px 16px;
     font-size: 12px;
+    color: var(--paper);
+  }
+  .topbar .topbar-nav .lang-toggle button.active {
+    background-color: var(--paper) !important;
+    color: var(--ink) !important;
   }
 }
 
