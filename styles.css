@@ -91,6 +91,17 @@ button { font: inherit; cursor: pointer; }
 @media (max-width: 720px) {
   .topbar { padding: 0 20px; }
 }
+/* CRITICAL: backdrop-filter on .topbar creates a containing block for its
+   fixed-positioned children (the .topbar-nav drawer), which made the mobile
+   overlay collapse into the 64px topbar instead of covering the viewport.
+   Strip it on mobile — the menu is solid var(--bg-dark) when open and the
+   topbar background already changes, so the blur effect adds nothing here. */
+@media (max-width: 880px) {
+  .topbar {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
 .topbar.on-dark {
   background: linear-gradient(to bottom, rgba(31,22,16,0.85), rgba(31,22,16,0));
   color: var(--paper);
