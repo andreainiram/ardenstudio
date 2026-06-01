@@ -109,9 +109,11 @@ function HeroA({ t }) {
             <em>{t.hero.titleA[1]}</em> {t.hero.titleA[2]}
           </h1>
           <p className="sub fade-up d2">{t.hero.subA}</p>
-          <Countdown labels={t.hero.countdownLabel} />
-          <div className="cta-row fade-up d4">
-            <a href="#booking" className="btn btn-primary">{t.hero.ctaPrimary}</a>
+          <div className="cta-row fade-up d4" style={{ flexDirection: "column", alignItems: "center", gap: 12 }}>
+            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
+              <a href="#booking" className="btn btn-primary btn-lg">{t.hero.ctaLagree}</a>
+              <a href="#booking" className="btn btn-primary btn-lg">{t.hero.ctaPilates}</a>
+            </div>
             <a href="#method" className="btn btn-ghost-dark">{t.hero.ctaSecondary}</a>
           </div>
         </div>
@@ -140,7 +142,6 @@ function HeroB({ t }) {
               <span className="em">{t.hero.titleB[1]} {t.hero.titleB[2]}</span>
             </h1>
             <p className="sub fade-up d2">{t.hero.subB}</p>
-            <Countdown labels={t.hero.countdownLabel} />
             <div className="cta-row fade-up d4">
               <a href="#booking" className="btn btn-primary">{t.hero.ctaPrimary}</a>
               <a href="#waitlist" className="btn btn-ghost-light">{t.hero.ctaTertiary}</a>
@@ -190,7 +191,6 @@ function HeroC({ t }) {
             <div className="left fade-up d2">
               <span className="eyebrow">{t.hero.subC}</span>
               <p>{t.hero.subC2}</p>
-              <Countdown labels={t.hero.countdownLabel} />
             </div>
             <div className="monogram-wrap fade-up">
               <Monogram size={200} delay={300} style="rotate" />
