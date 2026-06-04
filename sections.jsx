@@ -76,19 +76,6 @@ function AboutSection({ t }) {
           <p className="about-body">{t.about.spaceBody}</p>
         </div>
 
-        {/* The methods */}
-        <div className="about-block">
-          <h3 className="about-h3 serif">{t.about.methodsTitle}</h3>
-          <div className="about-methods">
-            {t.about.methods.map((m, i) =>
-            <div key={i} className="about-method">
-                <h4 className="about-method-name serif">{m.name}</h4>
-                <p className="about-method-body">{m.body}</p>
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* Practical info — pricing + duration grid */}
         <div className="about-block">
           <h3 className="about-h3 serif">{t.about.infoTitle}</h3>
@@ -578,7 +565,7 @@ function PromoCards({ lang }) {
         <div className="promo-card-inner">
           <div className="promo-card-body">
             <h3>Summer Promo x4</h3>
-            <p>{lang === "it" ? "4 lezioni, scegli tra Pilates o Lagree." : "4 classes, choose between Pilates or Lagree."}</p>
+            <p>{lang === "it" ? "4 lezioni, sia Pilates che Lagree, scegli cosa vuoi, massima flessibilità." : "4 classes, Pilates or Lagree, choose freely — maximum flexibility."}</p>
           </div>
           <HealcodeBtn serviceId="100033" label={buy} />
         </div>
@@ -588,7 +575,7 @@ function PromoCards({ lang }) {
         <div className="promo-card-inner">
           <div className="promo-card-body">
             <h3>Summer Promo x8</h3>
-            <p>{lang === "it" ? "8 lezioni, scegli tra Pilates o Lagree." : "8 classes, choose between Pilates or Lagree."}</p>
+            <p>{lang === "it" ? "8 lezioni, sia Pilates che Lagree, scegli cosa vuoi, massima flessibilità." : "8 classes, Pilates or Lagree, choose freely — maximum flexibility."}</p>
           </div>
           <HealcodeBtn serviceId="100029" label={buy} />
         </div>

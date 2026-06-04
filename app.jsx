@@ -106,10 +106,11 @@ function App() {
   const sectionMap = {
     about:     <AboutSection key="about" t={t} />,
     instagram: <InstagramSection key="instagram" t={t} />,
+    method:    <MethodSection key="method" t={t} />,
     booking:   <BookingSection key="booking" t={t} />,
     contact:   <ContactSection key="contact" t={t} />,
   };
-  const order = (SECTION_ORDERS[tweaks.order] || SECTION_ORDERS["about-instagram-method-booking-contact"]).filter(id => id !== "method");
+  const order = SECTION_ORDERS[tweaks.order] || SECTION_ORDERS["about-instagram-method-booking-contact"];
 
   return (
     <React.Fragment>
@@ -132,6 +133,7 @@ function App() {
         </button>
         <nav className={"topbar-nav" + (menuOpen ? " open" : "")}>
           <a href="#about" onClick={() => setMenuOpen(false)}>{t.nav.about}</a>
+          <a href="#method" onClick={() => setMenuOpen(false)}>{t.nav.method}</a>
           <a href="#booking" onClick={() => setMenuOpen(false)}>{t.nav.booking}</a>
           <a href="prezzi.html" onClick={() => setMenuOpen(false)}>{t.nav.pricing}</a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>{t.nav.contact}</a>
