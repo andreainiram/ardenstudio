@@ -831,8 +831,11 @@ section.paper { background: var(--paper); color: var(--ink); }
   to   { opacity: 1; }
 }
 .promo-popup {
-  background: #1f1610;
-  border: 1px solid rgba(193,163,128,0.25);
+  /* VARIANTE B — Estate Bianca */
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='520'%3E%3C!-- palm left --%3E%3Cellipse cx='55' cy='540' rx='10' ry='190' fill='%232d4a1e' opacity='.18' transform='rotate(-6 55 540)'/%3E%3Cpath d='M55 340 Q-5 275 -30 235 Q25 280 55 340' fill='%23366128' opacity='.18'/%3E%3Cpath d='M55 340 Q15 305 -15 315 Q20 318 55 340' fill='%23366128' opacity='.15'/%3E%3Cpath d='M55 340 Q105 268 128 230 Q88 278 55 340' fill='%23366128' opacity='.18'/%3E%3Cpath d='M55 340 Q108 308 132 322 Q98 318 55 340' fill='%23366128' opacity='.15'/%3E%3Cpath d='M55 340 Q48 272 44 228 Q52 278 55 340' fill='%23366128' opacity='.16'/%3E%3C!-- palm right --%3E%3Cellipse cx='705' cy='540' rx='10' ry='175' fill='%232d4a1e' opacity='.15' transform='rotate(8 705 540)'/%3E%3Cpath d='M705 355 Q762 282 790 245 Q748 290 705 355' fill='%23366128' opacity='.18'/%3E%3Cpath d='M705 355 Q748 322 776 338 Q738 333 705 355' fill='%23366128' opacity='.15'/%3E%3Cpath d='M705 355 Q652 278 626 240 Q660 286 705 355' fill='%23366128' opacity='.18'/%3E%3Cpath d='M705 355 Q648 320 622 332 Q660 326 705 355' fill='%23366128' opacity='.15'/%3E%3Cpath d='M705 355 Q712 280 716 238 Q706 282 705 355' fill='%23366128' opacity='.16'/%3E%3C/svg%3E") bottom center/100% auto no-repeat,
+    linear-gradient(175deg, #ffffff 0%, #f8f5ee 60%, #f0ebe0 100%);
+  border: 1px solid rgba(193,163,128,0.35);
   max-width: 760px;
   width: 100%;
   padding: 48px 48px 36px;
@@ -850,11 +853,11 @@ section.paper { background: var(--paper); color: var(--ink); }
   top: 16px; right: 20px;
   background: none;
   border: none;
-  color: var(--fg-on-dark);
+  color: #1f1610;
   font-size: 28px;
   line-height: 1;
   cursor: pointer;
-  opacity: 0.45;
+  opacity: 0.4;
   transition: opacity 0.2s;
   padding: 0;
 }
@@ -865,7 +868,7 @@ section.paper { background: var(--paper); color: var(--ink); }
   margin-top: 20px;
   background: none;
   border: none;
-  color: var(--fg-on-dark);
+  color: #1f1610;
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
@@ -876,6 +879,21 @@ section.paper { background: var(--paper); color: var(--ink); }
   transition: opacity 0.2s;
 }
 .promo-dismiss-link:hover { opacity: 0.7; }
+
+/* Popup light-mode text overrides */
+.promo-popup .promo-eyebrow { color: #7a6240; }
+.promo-popup .promo-title { color: #c1a380; }
+.promo-popup .promo-title em { color: #c1a380; }
+.promo-popup .promo-sub { color: #3a2c1e; opacity: 0.7; }
+.promo-popup .promo-count-num { color: #1f1610; }
+.promo-popup .promo-count-label { color: #7a6240; opacity: 0.8; }
+.promo-popup .promo-countdown { border-color: rgba(193,163,128,0.35); }
+.promo-popup .promo-card { border-color: rgba(193,163,128,0.35); background: rgba(255,255,255,0.6); }
+.promo-popup .promo-card:hover { border-color: rgba(193,163,128,0.7); background: rgba(255,255,255,0.9); }
+.promo-popup .promo-card-body h3 { color: #1f1610; }
+.promo-popup .promo-card-body p { color: #3a2c1e; }
+.promo-popup .healcode-pricing-option-text-link { background: #2d5a20 !important; color: #ffffff !important; border-color: #2d5a20 !important; }
+.promo-popup .healcode-pricing-option-text-link:hover { background: #3d7a2c !important; color: #ffffff !important; border-color: #3d7a2c !important; }
 
 /* Banner (sezione fissa) */
 .promo-section {
@@ -902,8 +920,8 @@ section.paper { background: var(--paper); color: var(--ink); }
 .promo-title {
   font-family: var(--font-serif);
   font-size: clamp(36px, 5vw, 64px);
-  font-weight: 300;
-  color: var(--fg-on-dark);
+  font-weight: 500;
+  color: var(--accent);
   margin: 0 0 16px;
   line-height: 1.1;
 }

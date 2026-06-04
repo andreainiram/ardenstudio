@@ -597,28 +597,18 @@ function PromoCards({ lang }) {
   );
 }
 
-function PromoHeader({ lang, days, hours, mins, secs, pad }) {
+function PromoHeader({ lang }) {
   return (
     <div className="promo-header">
       <div className="promo-eyebrow"><span className="pulse"></span>{lang === "it" ? "Offerta Limitata · Estate 2026" : "Limited Offer · Summer 2026"}</div>
       <h2 className="promo-title">Summer <em>Promo</em></h2>
       <p className="promo-sub">{lang === "it" ? "Due offerte esclusive. Disponibili fino al 31 luglio." : "Two exclusive offers. Available until July 31st."}</p>
-      <div className="promo-countdown">
-        {[[days, lang === "it" ? "Giorni" : "Days"], [hours, lang === "it" ? "Ore" : "Hours"], [mins, "Min"], [secs, "Sec"]].map(([val, label]) => (
-          <div key={label} className="promo-count-block">
-            <span className="promo-count-num">{pad(val)}</span>
-            <span className="promo-count-label">{label}</span>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
 
 // Popup — appare dopo 2s, una volta per sessione
 function PromoPopup({ t }) {
-  const { days, hours, mins, secs } = usePromoCountdown("2026-07-31T23:59:59");
-  const pad = n => String(n).padStart(2, "0");
   const lang = t === window.COPY?.en ? "en" : "it";
   const [visible, setVisible] = React.useState(false);
   React.useEffect(() => {
@@ -632,7 +622,7 @@ function PromoPopup({ t }) {
     <div className="promo-overlay" onClick={e => { if (e.target === e.currentTarget) dismiss(); }}>
       <div className="promo-popup">
         <button className="promo-close" onClick={dismiss} aria-label="Chiudi">×</button>
-        <PromoHeader lang={lang} days={days} hours={hours} mins={mins} secs={secs} pad={pad} />
+        <PromoHeader lang={lang} />
         <PromoCards lang={lang} />
         <button className="promo-dismiss-link" onClick={dismiss}>{lang === "it" ? "No grazie, chiudi" : "No thanks, close"}</button>
       </div>
@@ -642,13 +632,11 @@ function PromoPopup({ t }) {
 
 // Banner — sezione fissa in homepage
 function PromoSection({ t }) {
-  const { days, hours, mins, secs } = usePromoCountdown("2026-07-31T23:59:59");
-  const pad = n => String(n).padStart(2, "0");
   const lang = t === window.COPY?.en ? "en" : "it";
   return (
     <section className="promo-section dark" data-screen-label="summer-promo">
       <div className="container">
-        <PromoHeader lang={lang} days={days} hours={hours} mins={mins} secs={secs} pad={pad} />
+        <PromoHeader lang={lang} />
         <PromoCards lang={lang} />
       </div>
     </section>
