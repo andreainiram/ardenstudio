@@ -531,4 +531,128 @@ function FooterSection({ t }) {
 
 }
 
-window.ArdenSections = { AboutSection, InstagramSection, MethodSection, BookingSection, WaitlistSection, ContactSection, FooterSection };
+// ─── Summer Promo Banner ───────────────────────────────────────────────────
+
+function usePromoCountdown(target) {
+  const calc = () => {
+    const diff = Math.max(0, new Date(target) - new Date());
+    return {
+      days:  Math.floor(diff / 86400000),
+      hours: Math.floor((diff % 86400000) / 3600000),
+      mins:  Math.floor((diff % 3600000)  / 60000),
+      secs:  Math.floor((diff % 60000)    / 1000),
+    };
+  };
+  const [time, setTime] = React.useState(calc);
+  React.useEffect(() => {
+    const id = setInterval(() => setTime(calc()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  return time;
+}
+
+// Widget healcode iniettato nel DOM reale (bypassa il virtual DOM di React)
+function HealcodeBtn({ serviceId, label }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!ref.current) return;
+    ref.current.innerHTML = `<healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="${serviceId}" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="${label}"></healcode-widget>`;
+    // Ricarica healcode.js così trova i nuovi elementi nel DOM
+    const old = document.querySelector('script[src*="healcode"]');
+    if (old) old.remove();
+    const s = document.createElement('script');
+    s.src = 'https://widgets.mindbodyonline.com/javascripts/healcode.js';
+    s.type = 'text/javascript';
+    document.head.appendChild(s);
+  }, [serviceId, label]);
+  return <div ref={ref} className="promo-widget-wrap" />;
+}
+
+// Shared cards — riusate da popup e banner
+function PromoCards({ lang }) {
+  const buy = lang === "it" ? "Acquista" : "Buy now";
+  return (
+    <div className="promo-cards">
+      <div className="promo-card">
+        <div className="promo-card-badge">{lang === "it" ? "Promo Estate" : "Summer Deal"}</div>
+        <div className="promo-card-inner">
+          <div className="promo-card-body">
+            <h3>Summer Promo x4</h3>
+            <p>{lang === "it" ? "4 lezioni, scegli tra Pilates o Lagree." : "4 classes, choose between Pilates or Lagree."}</p>
+          </div>
+          <HealcodeBtn serviceId="100033" label={buy} />
+        </div>
+      </div>
+      <div className="promo-card">
+        <div className="promo-card-badge">{lang === "it" ? "Promo Estate" : "Summer Deal"}</div>
+        <div className="promo-card-inner">
+          <div className="promo-card-body">
+            <h3>Summer Promo x8</h3>
+            <p>{lang === "it" ? "8 lezioni, scegli tra Pilates o Lagree." : "8 classes, choose between Pilates or Lagree."}</p>
+          </div>
+          <HealcodeBtn serviceId="100029" label={buy} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PromoHeader({ lang, days, hours, mins, secs, pad }) {
+  return (
+    <div className="promo-header">
+      <div className="promo-eyebrow"><span className="pulse"></span>{lang === "it" ? "Offerta Limitata · Estate 2026" : "Limited Offer · Summer 2026"}</div>
+      <h2 className="promo-title">Summer <em>Promo</em></h2>
+      <p className="promo-sub">{lang === "it" ? "Due offerte esclusive. Disponibili fino al 31 luglio." : "Two exclusive offers. Available until July 31st."}</p>
+      <div className="promo-countdown">
+        {[[days, lang === "it" ? "Giorni" : "Days"], [hours, lang === "it" ? "Ore" : "Hours"], [mins, "Min"], [secs, "Sec"]].map(([val, label]) => (
+          <div key={label} className="promo-count-block">
+            <span className="promo-count-num">{pad(val)}</span>
+            <span className="promo-count-label">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Popup — appare dopo 2s, una volta per sessione
+function PromoPopup({ t }) {
+  const { days, hours, mins, secs } = usePromoCountdown("2026-07-31T23:59:59");
+  const pad = n => String(n).padStart(2, "0");
+  const lang = t === window.COPY?.en ? "en" : "it";
+  const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    if (sessionStorage.getItem("promo_dismissed")) return;
+    const id = setTimeout(() => setVisible(true), 2000);
+    return () => clearTimeout(id);
+  }, []);
+  const dismiss = () => { setVisible(false); sessionStorage.setItem("promo_dismissed", "1"); };
+  if (!visible) return null;
+  return (
+    <div className="promo-overlay" onClick={e => { if (e.target === e.currentTarget) dismiss(); }}>
+      <div className="promo-popup">
+        <button className="promo-close" onClick={dismiss} aria-label="Chiudi">×</button>
+        <PromoHeader lang={lang} days={days} hours={hours} mins={mins} secs={secs} pad={pad} />
+        <PromoCards lang={lang} />
+        <button className="promo-dismiss-link" onClick={dismiss}>{lang === "it" ? "No grazie, chiudi" : "No thanks, close"}</button>
+      </div>
+    </div>
+  );
+}
+
+// Banner — sezione fissa in homepage
+function PromoSection({ t }) {
+  const { days, hours, mins, secs } = usePromoCountdown("2026-07-31T23:59:59");
+  const pad = n => String(n).padStart(2, "0");
+  const lang = t === window.COPY?.en ? "en" : "it";
+  return (
+    <section className="promo-section dark" data-screen-label="summer-promo">
+      <div className="container">
+        <PromoHeader lang={lang} days={days} hours={hours} mins={mins} secs={secs} pad={pad} />
+        <PromoCards lang={lang} />
+      </div>
+    </section>
+  );
+}
+
+window.ArdenSections = { AboutSection, InstagramSection, MethodSection, BookingSection, WaitlistSection, ContactSection, FooterSection, PromoSection, PromoPopup };

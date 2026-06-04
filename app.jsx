@@ -2,7 +2,7 @@
 
 const { useState: useStateApp, useEffect: useEffectApp, useMemo: useMemoApp } = React;
 const { HeroA, HeroB, HeroC } = window.ArdenHeroes;
-const { AboutSection, InstagramSection, MethodSection, BookingSection, ContactSection, FooterSection } = window.ArdenSections;
+const { AboutSection, InstagramSection, MethodSection, BookingSection, ContactSection, FooterSection, PromoSection, PromoPopup } = window.ArdenSections;
 const { TweaksPanel, useTweaks, TweakSection, TweakRadio, TweakColor, TweakSelect } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -106,11 +106,10 @@ function App() {
   const sectionMap = {
     about:     <AboutSection key="about" t={t} />,
     instagram: <InstagramSection key="instagram" t={t} />,
-    method:    <MethodSection key="method"  t={t} />,
     booking:   <BookingSection key="booking" t={t} />,
     contact:   <ContactSection key="contact" t={t} />,
   };
-  const order = SECTION_ORDERS[tweaks.order] || SECTION_ORDERS["about-instagram-method-booking-contact"];
+  const order = (SECTION_ORDERS[tweaks.order] || SECTION_ORDERS["about-instagram-method-booking-contact"]).filter(id => id !== "method");
 
   return (
     <React.Fragment>
@@ -133,7 +132,6 @@ function App() {
         </button>
         <nav className={"topbar-nav" + (menuOpen ? " open" : "")}>
           <a href="#about" onClick={() => setMenuOpen(false)}>{t.nav.about}</a>
-          <a href="#method" onClick={() => setMenuOpen(false)}>{t.nav.method}</a>
           <a href="#booking" onClick={() => setMenuOpen(false)}>{t.nav.booking}</a>
           <a href="prezzi.html" onClick={() => setMenuOpen(false)}>{t.nav.pricing}</a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>{t.nav.contact}</a>
@@ -163,8 +161,10 @@ function App() {
         </nav>
       </header>
 
+      <PromoPopup t={t} />
       <main id="top">
         <Hero t={t} />
+        <PromoSection t={t} />
         {order.map((id) => sectionMap[id])}
         <FooterSection t={t} />
       </main>
