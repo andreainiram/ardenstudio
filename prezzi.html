@@ -173,7 +173,8 @@
     }
 
     /* ── MindBody button ── */
-    .healcode-pricing-option-text-link {
+    .healcode-pricing-option-text-link,
+    .card-btn {
       margin-top: auto;
       display: block;
       width: 100%;
@@ -191,9 +192,12 @@
       text-decoration: none !important;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
       box-sizing: border-box;
+      touch-action: manipulation;
     }
     .healcode-pricing-option-text-link:hover,
-    .pricing-card.featured .healcode-pricing-option-text-link {
+    .card-btn:hover,
+    .pricing-card.featured .healcode-pricing-option-text-link,
+    .pricing-card.featured .card-btn {
       background: var(--accent) !important;
       color: var(--bg-dark) !important;
       border-color: var(--accent);
