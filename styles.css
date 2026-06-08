@@ -735,12 +735,22 @@ section.paper { background: var(--paper); color: var(--ink); }
 .booking-card .widget-container {
   width: 100%;
   min-height: 480px;
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
 }
 /* Force MindBody Branded Web widget iframes to be responsive */
 .booking-card .widget-container .mindbody-widget,
 .booking-card .widget-container .mindbody-widget iframe {
   width: 100% !important;
   max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 720px) {
+  .booking-card { padding: 24px 16px; }
+  .booking-card .widget-container { min-height: 560px; }
+  .booking-card .widget-container .mindbody-widget iframe {
+    min-height: 560px;
+  }
 }
 
 /* Footer meta row */
@@ -1016,6 +1026,12 @@ section.paper { background: var(--paper); color: var(--ink); }
 }
 /* Buy button — popup e banner */
 .promo-widget-wrap { margin-top: 20px; }
+.promo-card .healcode-pricing-option-text-link,
+.promo-popup .healcode-pricing-option-text-link,
+.healcode-pricing-option-text-link {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(193,163,128,0.2);
+}
 .promo-card .healcode-pricing-option-text-link,
 .promo-popup .healcode-pricing-option-text-link {
   display: block;
