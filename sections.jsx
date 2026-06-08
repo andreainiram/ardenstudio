@@ -540,7 +540,7 @@ function usePromoCountdown(target) {
 
 // Link diretto MindBody — funziona su tutti i browser incluso iOS Safari
 function MboLink({ serviceId, label }) {
-  const href = `https://clients.mindbodyonline.com/ASP/main_shop.asp?studioid=5752951&stype=41&prodid=${serviceId}`;
+  const href = `https://cart.mindbodyonline.com/sites/134138/cart/add_service?mbo_item_id=${serviceId}`;
   return (
     <a
       href={href}
