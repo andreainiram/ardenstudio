@@ -538,21 +538,19 @@ function usePromoCountdown(target) {
   return time;
 }
 
-// Widget healcode iniettato nel DOM reale (bypassa il virtual DOM di React)
-function HealcodeBtn({ serviceId, label }) {
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    if (!ref.current) return;
-    ref.current.innerHTML = `<healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="${serviceId}" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="${label}"></healcode-widget>`;
-    // Ricarica healcode.js così trova i nuovi elementi nel DOM
-    const old = document.querySelector('script[src*="healcode"]');
-    if (old) old.remove();
-    const s = document.createElement('script');
-    s.src = 'https://widgets.mindbodyonline.com/javascripts/healcode.js';
-    s.type = 'text/javascript';
-    document.head.appendChild(s);
-  }, [serviceId, label]);
-  return <div ref={ref} className="promo-widget-wrap" />;
+// Link diretto MindBody — funziona su tutti i browser incluso iOS Safari
+function MboLink({ serviceId, label }) {
+  const href = `https://clients.mindbodyonline.com/ASP/main_shop.asp?studioid=5752951&stype=41&prodid=${serviceId}`;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="promo-buy-link"
+    >
+      {label}
+    </a>
+  );
 }
 
 // Shared cards — riusate da popup e banner
@@ -567,7 +565,7 @@ function PromoCards({ lang }) {
             <h3>Summer Promo x4</h3>
             <p>{lang === "it" ? "4 lezioni, sia Pilates che Lagree, scegli cosa vuoi, massima flessibilità." : "4 classes, Pilates or Lagree, choose freely — maximum flexibility."}</p>
           </div>
-          <HealcodeBtn serviceId="100033" label={buy} />
+          <MboLink serviceId="100033" label={buy} />
         </div>
       </div>
       <div className="promo-card">
@@ -577,7 +575,7 @@ function PromoCards({ lang }) {
             <h3>Summer Promo x8</h3>
             <p>{lang === "it" ? "8 lezioni, sia Pilates che Lagree, scegli cosa vuoi, massima flessibilità." : "8 classes, Pilates or Lagree, choose freely — maximum flexibility."}</p>
           </div>
-          <HealcodeBtn serviceId="100029" label={buy} />
+          <MboLink serviceId="100029" label={buy} />
         </div>
       </div>
     </div>
