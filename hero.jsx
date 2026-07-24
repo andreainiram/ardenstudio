@@ -100,7 +100,6 @@ function HeroA({ t }) {
     <section className="hero hero-a" data-hero="A">
       <div className="container">
         <div className="stack">
-          <div className="opening-pill fade-up"><span className="pulse"></span>{t.opening}</div>
           <div className="monogram-wrap">
             <Monogram size={168} delay={200} style="draw" />
           </div>
@@ -133,9 +132,6 @@ function HeroB({ t }) {
       <div className="container">
         <div className="grid">
           <div className="left">
-            <div className="opening-pill fade-up" style={{ alignSelf: "flex-start" }}>
-              <span className="pulse"></span>{t.opening}
-            </div>
             <h1 className="fade-up d1">
               {t.hero.titleB[0]}
               <br />
@@ -166,8 +162,7 @@ function HeroC({ t }) {
   return (
     <section className="hero hero-c" data-hero="C">
       <div style={{ position: "absolute", top: 96, left: 0, right: 0, paddingLeft: 48, paddingRight: 48 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div className="opening-pill fade-up"><span className="pulse"></span>{t.opening}</div>
+        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", opacity: 0.6 }}>
             Lagree · Pilates · Torino
           </div>
