@@ -19,26 +19,6 @@ const SEPT_PROMOS = [
 
 const cartUrl = (id) => `https://cart.mindbodyonline.com/sites/134138/cart/add_contract?mbo_item_id=${id}`;
 
-function MoleSkyline() {
-  // Mole Antonelliana silhouette — Torino's calling card
-  return (
-    <svg
-      className="sept-skyline"
-      viewBox="0 0 60 90"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <g fill="currentColor">
-        <rect x="15" y="70" width="30" height="18" />
-        <ellipse cx="30" cy="72" rx="14" ry="10" />
-        <rect x="27" y="24" width="6" height="48" />
-        <polygon points="30,4 26.5,26 33.5,26" />
-        <circle cx="30" cy="3" r="1.2" />
-      </g>
-    </svg>
-  );
-}
-
 function SeptemberPromoPopup() {
   const [visible, setVisible] = useStateSep(false);
   const lang = (typeof localStorage !== "undefined" && localStorage.getItem("arden_lang")) || "it";
@@ -78,10 +58,6 @@ function SeptemberPromoPopup() {
         <button className="sept-close" onClick={dismiss} aria-label={lang === "it" ? "Chiudi" : "Close"}>×</button>
 
         <div className="sept-header">
-          <div className="sept-eyebrow">
-            <span className="sept-dot" />
-            {lang === "it" ? "Autunno 2026 · Torino" : "Autumn 2026 · Turin"}
-          </div>
           <h2 id="sept-title" className="sept-title">
             Hello, <em>September</em>
           </h2>
@@ -91,8 +67,6 @@ function SeptemberPromoPopup() {
               : "Get back in shape. Welcome back to the city."}
           </p>
         </div>
-
-        <MoleSkyline />
 
         <div className="sept-cards">
           {SEPT_PROMOS.map((p) => (

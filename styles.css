@@ -1680,30 +1680,7 @@ footer.foot .marque img {
 
 .sept-header {
   text-align: center;
-  margin-bottom: 18px;
-}
-.sept-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: #d9a26e;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-.sept-dot {
-  width: 6px;
-  height: 6px;
-  background: #d9a26e;
-  border-radius: 50%;
-  display: inline-block;
-  animation: sept-pulse 2s ease-in-out infinite;
-}
-@keyframes sept-pulse {
-  0%, 100% { opacity: 0.4; }
-  50%      { opacity: 1; }
+  margin-bottom: 40px;
 }
 .sept-title {
   font-family: var(--font-serif);
@@ -1728,15 +1705,6 @@ footer.foot .marque img {
   opacity: 0.72;
   margin: 0;
   letter-spacing: 0.01em;
-}
-
-.sept-skyline {
-  display: block;
-  width: 34px;
-  height: auto;
-  margin: 8px auto 28px;
-  color: #d9a26e;
-  opacity: 0.55;
 }
 
 .sept-cards {
@@ -1851,10 +1819,9 @@ footer.foot .marque img {
 @media (max-width: 720px) {
   .sept-overlay { padding: 12px 8px; align-items: flex-start; }
   .sept-popup { padding: 48px 20px 28px; border-radius: 3px; max-height: 96vh; }
-  .sept-header { margin-bottom: 8px; }
+  .sept-header { margin-bottom: 28px; }
   .sept-title { font-size: 36px; }
   .sept-sub { font-size: 15px; }
-  .sept-skyline { width: 28px; margin: 6px auto 20px; }
   .sept-cards { grid-template-columns: 1fr; gap: 10px; margin-bottom: 22px; }
   .sept-card { padding: 18px 16px 16px; }
   .sept-card-price { font-size: 32px; margin-bottom: 14px; }
