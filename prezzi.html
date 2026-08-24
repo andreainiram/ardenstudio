@@ -119,10 +119,6 @@
       border-color: rgba(193,163,128,0.35);
       background: rgba(193,163,128,0.10);
     }
-    .pricing-card.featured {
-      border-color: rgba(193,163,128,0.4);
-      background: rgba(193,163,128,0.11);
-    }
     .pricing-card .badge {
       position: absolute;
       top: -1px; right: 16px;
@@ -195,9 +191,7 @@
       touch-action: manipulation;
     }
     .healcode-pricing-option-text-link:hover,
-    .card-btn:hover,
-    .pricing-card.featured .healcode-pricing-option-text-link,
-    .pricing-card.featured .card-btn {
+    .card-btn:hover {
       background: var(--accent) !important;
       color: var(--bg-dark) !important;
       border-color: var(--accent);
@@ -363,8 +357,7 @@
                   <div className="card-per">€36 / {lang === "it" ? "lezione" : "class"}</div>
                   <MboLink serviceId="100006" labelIt="Acquista" labelEn="Buy now" lang={lang} />
                 </div>
-                <div className="pricing-card featured">
-                  <div className="badge">{lang === "it" ? "Più scelto" : "Most popular"}</div>
+                <div className="pricing-card">
                   <span className="card-name">{lang === "it" ? "10 Lezioni" : "10 Classes"}</span>
                   <span className="card-sessions">10 {lang === "it" ? "lezioni" : "classes"}</span>
                   <div className="card-price"><span className="currency">€</span>340</div>
@@ -424,8 +417,7 @@
                   <div className="card-per">€30 / {lang === "it" ? "lezione" : "class"}</div>
                   <MboLink serviceId="100012" labelIt="Acquista" labelEn="Buy now" lang={lang} />
                 </div>
-                <div className="pricing-card featured">
-                  <div className="badge">{lang === "it" ? "Più scelto" : "Most popular"}</div>
+                <div className="pricing-card">
                   <span className="card-name">{lang === "it" ? "10 Lezioni" : "10 Classes"}</span>
                   <span className="card-sessions">10 {lang === "it" ? "lezioni" : "classes"}</span>
                   <div className="card-price"><span className="currency">€</span>280</div>
@@ -457,8 +449,7 @@
                   <div className="card-per">&nbsp;</div>
                   <MboLink serviceId="100018" labelIt="Acquista" labelEn="Buy now" lang={lang} />
                 </div>
-                <div className="pricing-card featured">
-                  <div className="badge">{lang === "it" ? "Risparmia" : "Save"}</div>
+                <div className="pricing-card">
                   <span className="card-name">{lang === "it" ? "5 Private Lagree" : "5 Lagree Private"}</span>
                   <span className="card-sessions">5 {lang === "it" ? "sessioni" : "sessions"}</span>
                   <div className="card-price"><span className="currency">€</span>300</div>
