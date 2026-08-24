@@ -3,9 +3,9 @@
 const { useState: useStateSep, useEffect: useEffectSep } = React;
 
 const SEPT_PROMOS = [
-  { id: 103, cat: { it: "Body Shape",       en: "Body Shape" },
+  { id: 103, cat: { it: "Back to Shape",    en: "Back to Shape" },
              sessions: { it: "3 Lagree · 3 Pilates",                   en: "3 Lagree · 3 Pilates" },                   price: 205 },
-  { id: 104, cat: { it: "Body Shape",       en: "Body Shape" },
+  { id: 104, cat: { it: "Back to Shape",    en: "Back to Shape" },
              sessions: { it: "5 Lagree · 5 Pilates",                   en: "5 Lagree · 5 Pilates" },                   price: 350 },
   { id: 105, cat: { it: "+ Osteopata",      en: "+ Osteopathy" },
              sessions: { it: "3 Lagree · 3 Pilates · 1 Osteopata",     en: "3 Lagree · 3 Pilates · 1 Osteopathy" },    price: 285 },
@@ -58,8 +58,9 @@ function SeptemberPromoPopup() {
         <button className="sept-close" onClick={dismiss} aria-label={lang === "it" ? "Chiudi" : "Close"}>×</button>
 
         <div className="sept-header">
+          <div className="sept-tag">Promo</div>
           <h2 id="sept-title" className="sept-title">
-            Hello, <em>September</em>
+            Hello <em>September</em>
           </h2>
           <p className="sept-sub">
             {lang === "it"

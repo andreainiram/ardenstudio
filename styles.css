@@ -1682,6 +1682,15 @@ footer.foot .marque img {
   text-align: center;
   margin-bottom: 40px;
 }
+.sept-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #d9a26e;
+  margin-bottom: 14px;
+  display: inline-block;
+}
 .sept-title {
   font-family: var(--font-serif);
   font-size: clamp(38px, 6vw, 62px);
@@ -1709,7 +1718,7 @@ footer.foot .marque img {
 
 .sept-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
   margin-bottom: 28px;
 }
