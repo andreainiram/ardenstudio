@@ -1620,3 +1620,246 @@ footer.foot .marque img {
   0%, 100% { transform: scaleY(0.3); opacity: 0.3; }
   50%      { transform: scaleY(1); opacity: 1; }
 }
+
+/* ---------- Hello, September Promo Popup — Back to the City ---------- */
+.sept-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 12, 10, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  overflow-y: auto;
+  animation: sept-fade-in 0.5s ease;
+}
+@keyframes sept-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.sept-popup {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  background: #1a1512;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(217,162,110,0.10), transparent 70%),
+    linear-gradient(180deg, #1a1512 0%, #14100e 100%);
+  border: 1px solid rgba(217,162,110,0.22);
+  border-radius: 4px;
+  padding: 56px 48px 40px;
+  color: #f5ede0;
+  max-height: 92vh;
+  overflow-y: auto;
+  animation: sept-slide-up 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+}
+@keyframes sept-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sept-close {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #f5ede0;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.55;
+  padding: 4px 8px;
+  transition: opacity 0.2s;
+  touch-action: manipulation;
+}
+.sept-close:hover { opacity: 1; }
+
+.sept-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.sept-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #d9a26e;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.sept-dot {
+  width: 6px;
+  height: 6px;
+  background: #d9a26e;
+  border-radius: 50%;
+  display: inline-block;
+  animation: sept-pulse 2s ease-in-out infinite;
+}
+@keyframes sept-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+.sept-title {
+  font-family: var(--font-serif);
+  font-size: clamp(38px, 6vw, 62px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  color: #f5ede0;
+  margin: 0 0 14px;
+}
+.sept-title em {
+  font-style: italic;
+  color: #d9a26e;
+  font-weight: 400;
+}
+.sept-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 300;
+  color: #f5ede0;
+  opacity: 0.72;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.sept-skyline {
+  display: block;
+  width: 34px;
+  height: auto;
+  margin: 8px auto 28px;
+  color: #d9a26e;
+  opacity: 0.55;
+}
+
+.sept-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.sept-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px 20px;
+  background: rgba(217,162,110,0.05);
+  border: 1px solid rgba(217,162,110,0.18);
+  border-radius: 3px;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.sept-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(217,162,110,0.6) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.sept-card:hover {
+  background: rgba(217,162,110,0.10);
+  border-color: rgba(217,162,110,0.45);
+  transform: translateY(-2px);
+}
+.sept-card:hover::before { opacity: 1; }
+
+.sept-card-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d9a26e;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+.sept-card-sessions {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #f5ede0;
+  opacity: 0.9;
+  margin-bottom: 18px;
+  min-height: 40px;
+}
+.sept-card-price {
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+  color: #f5ede0;
+  margin-bottom: 18px;
+}
+.sept-currency {
+  font-size: 20px;
+  vertical-align: super;
+  margin-right: 2px;
+  opacity: 0.7;
+}
+.sept-card-cta {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d9a26e;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(217,162,110,0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.2s, letter-spacing 0.25s;
+}
+.sept-arrow {
+  transition: transform 0.25s;
+  display: inline-block;
+}
+.sept-card:hover .sept-card-cta { color: #f5ede0; }
+.sept-card:hover .sept-arrow { transform: translateX(4px); }
+
+.sept-dismiss-link {
+  display: block;
+  margin: 8px auto 0;
+  background: transparent;
+  border: none;
+  color: #f5ede0;
+  opacity: 0.4;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: opacity 0.2s;
+  touch-action: manipulation;
+}
+.sept-dismiss-link:hover { opacity: 0.85; }
+
+/* Mobile */
+@media (max-width: 720px) {
+  .sept-overlay { padding: 12px 8px; align-items: flex-start; }
+  .sept-popup { padding: 48px 20px 28px; border-radius: 3px; max-height: 96vh; }
+  .sept-header { margin-bottom: 8px; }
+  .sept-title { font-size: 36px; }
+  .sept-sub { font-size: 15px; }
+  .sept-skyline { width: 28px; margin: 6px auto 20px; }
+  .sept-cards { grid-template-columns: 1fr; gap: 10px; margin-bottom: 22px; }
+  .sept-card { padding: 18px 16px 16px; }
+  .sept-card-price { font-size: 32px; margin-bottom: 14px; }
+  .sept-card-sessions { min-height: 0; margin-bottom: 14px; }
+}
+@media (min-width: 721px) and (max-width: 960px) {
+  .sept-cards { grid-template-columns: 1fr 1fr; }
+}

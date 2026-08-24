@@ -3,6 +3,7 @@
 const { useState: useStateApp, useEffect: useEffectApp, useMemo: useMemoApp } = React;
 const { HeroA, HeroB, HeroC } = window.ArdenHeroes;
 const { AboutSection, InstagramSection, MethodSection, BookingSection, ContactSection, FooterSection } = window.ArdenSections;
+const { SeptemberPromoPopup } = window.ArdenSeptember || {};
 const { TweaksPanel, useTweaks, TweakSection, TweakRadio, TweakColor, TweakSelect } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -163,6 +164,7 @@ function App() {
         </nav>
       </header>
 
+      {SeptemberPromoPopup ? <SeptemberPromoPopup /> : null}
       <main id="top">
         <Hero t={t} />
         {order.map((id) => sectionMap[id])}
