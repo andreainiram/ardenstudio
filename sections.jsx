@@ -31,6 +31,14 @@ function SectionHead({ num, title, lede }) {
 }
 
 // ---------- 01 — About / Studio ----------
+function SpacePhoto({ src, alt }) {
+  return (
+    <figure className="about-photo">
+      <img src={src} alt={alt} loading="lazy" />
+    </figure>
+  );
+}
+
 function AboutSection({ t }) {
   return (
     <section className="paper" id="about" data-screen-label="about">
@@ -57,16 +65,6 @@ function AboutSection({ t }) {
 
           <div className="about-intro-right">
             <p className="about-philosophy">{t.about.philosophy}</p>
-            <div className="about-etym">
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.18em", opacity: 0.55, textTransform: "uppercase" }}>
-                etimologia
-              </div>
-              <div className="about-etym-word serif">{t.about.etymology.word}</div>
-              <div className="about-etym-gloss mono">
-                <span style={{ opacity: 0.55 }}>{t.about.etymology.origin}</span>
-                <span>{t.about.etymology.gloss}</span>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -74,6 +72,17 @@ function AboutSection({ t }) {
         <div className="about-block">
           <h3 className="about-h3 serif">{t.about.spaceTitle}</h3>
           <p className="about-body">{t.about.spaceBody}</p>
+
+          <div className="about-photos">
+            {[
+              { src: "assets/download-1.jpg", alt: "Good things come to those who sweat" },
+              { src: "assets/download-6.jpg", alt: "Sala Pilates · panoramica" },
+              { src: "assets/PHOTO-2026-08-25-20-29-52.jpg", alt: "Sala Lagree · Arden Studio" },
+              { src: "assets/download-5.jpg", alt: "Logo AS · lampada" },
+            ].map((p, i) => (
+              <SpacePhoto key={i} {...p} />
+            ))}
+          </div>
         </div>
 
         {/* Practical info — pricing + duration grid */}
@@ -272,6 +281,11 @@ function MethodSection({ t }) {
         <div className="method-grid">
           {t.method.cards.map((c, i) =>
           <article key={i} className="method-card">
+              {c.image && (
+                <figure className="method-photo">
+                  <img src={c.image} alt={c.title} loading="lazy" />
+                </figure>
+              )}
               <h3>{c.title}</h3>
               {c.subtitle && <div className="method-subtitle mono">{c.subtitle}</div>}
               <div className="method-body">
@@ -538,19 +552,27 @@ function usePromoCountdown(target) {
   return time;
 }
 
-// Link diretto MindBody — funziona su tutti i browser incluso iOS Safari
+// Link MindBody — healcode su desktop, diretto su mobile
 function MboLink({ serviceId, label }) {
-  const href = `https://cart.mindbodyonline.com/sites/134138/cart/add_service?mbo_item_id=${serviceId}`;
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="promo-buy-link"
-    >
-      {label}
-    </a>
-  );
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!ref.current) return;
+    // Inietta healcode-widget nel DOM reale
+    ref.current.innerHTML = `<healcode-widget data-version="0.2" data-link-class="healcode-pricing-option-text-link" data-site-id="134138" data-mb-site-id="5752951" data-service-id="${serviceId}" data-bw-identity-site="true" data-type="pricing-link" data-inner-html="${label}"></healcode-widget>`;
+    // Carica/ricarica healcode.js dopo che i widget sono nel DOM
+    const old = document.querySelector('script[src*="healcode"]');
+    if (old) old.remove();
+    const s = document.createElement('script');
+    s.src = 'https://widgets.mindbodyonline.com/javascripts/healcode.js';
+    s.type = 'text/javascript';
+    s.onload = () => {
+      // Dopo il caricamento, aggiungi target="_blank" ai link generati per iOS
+      const links = ref.current && ref.current.querySelectorAll('.healcode-pricing-option-text-link');
+      if (links) links.forEach(l => { l.target = '_blank'; l.rel = 'noopener noreferrer'; });
+    };
+    document.head.appendChild(s);
+  }, [serviceId, label]);
+  return <div ref={ref} className="promo-widget-wrap" />;
 }
 
 // Shared cards — riusate da popup e banner

@@ -97,6 +97,7 @@ window.COPY = {
           num: "M / 01",
           title: "Lagree",
           subtitle: "Lezione di gruppo · Mega Pro",
+          image: "assets/download-4.jpg",
           body: "Lezione Lagree ad alta intensità, per piccoli gruppi di massimo cinque persone, con l'utilizzo del Mega Pro.\n\nQuesto potente allenamento per tutto il corpo è progettato per massimizzare l'intensità, sviluppare la resistenza muscolare, rafforzare il core e bruciare calorie in modo efficiente attraverso movimenti lenti e controllati. La lezione combina allenamento di forza, cardio, equilibrio e resistenza per scolpire e tonificare tutto il corpo, migliorando al contempo la concentrazione e la connessione mente-corpo attraverso la respirazione consapevole.\n\nAdatto a tutti i livelli di fitness. Per i nuovi clienti, consigliamo di prenotare una lezione introduttiva o privata prima di partecipare alla lezione collettiva.",
           rates: [
             { label: "Lezione collettiva", value: "40€" },
@@ -108,6 +109,7 @@ window.COPY = {
           num: "M / 02",
           title: "Pilates",
           subtitle: "Metodo BASI® · Reformer",
+          image: "assets/download-3.jpg",
           body: "Lezione di Pilates Reformer personalizzata, per piccoli gruppi di massimo cinque persone, eseguita sul Reformer con l'utilizzo di attrezzi (ring, ball, bands).\n\nUn allenamento completo per tutto il corpo, progettato per creare muscoli lunghi, tonici e definiti, migliorando al contempo la forza del core, la postura e favorendo il consumo calorico. Attraverso una respirazione consapevole, la lezione contribuisce anche a ripristinare l'equilibrio tra mente e corpo.\n\nAperto a tutti i livelli. Per i nuovi clienti consigliamo una lezione introduttiva o privata prima di partecipare alla lezione collettiva.",
           rates: [
             { label: "Lezione collettiva", value: "35€" },
@@ -257,6 +259,7 @@ window.COPY = {
           num: "M / 01",
           title: "Lagree",
           subtitle: "Group class · Mega Pro",
+          image: "assets/download-4.jpg",
           body: "A high-intensity Lagree class for small groups of up to five people, performed on the Mega Pro.\n\nThis powerful full-body workout is designed to maximise intensity, build muscular endurance, strengthen the core and burn calories efficiently through slow, controlled movements. The class combines strength, cardio, balance and resistance to sculpt and tone the entire body, while improving focus and the mind–body connection through mindful breath.\n\nSuitable for all fitness levels. For new clients, we recommend booking an intro or private class before joining the group class.",
           rates: [
             { label: "Group class", value: "€40" },
@@ -268,6 +271,7 @@ window.COPY = {
           num: "M / 02",
           title: "Pilates",
           subtitle: "BASI® Method · Reformer",
+          image: "assets/download-3.jpg",
           body: "Personalised Reformer Pilates class for a small group of up to five clients on the Reformer using props (ring, ball, bands).\n\nA full body workout designed to create lean, long, and toned muscles while improving core strength, posture, and helping to burn calories. Through mindful breathing, this class also helps restore balance to both the mind and body.\n\nAll levels are welcome, but we do recommend an Intro or Private session beforehand, especially for first timers.",
           rates: [
             { label: "Group class", value: "€35" },
